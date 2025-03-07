@@ -3,13 +3,13 @@
 
 # Instructions non exhaustives : 
 
-** Installer les **dépendances** : 
+## Installer les **dépendances** : 
 
     ```bash
     composer install
     ```
 
-*** Dupliquer le fichier `.env` et le renommer `.env.local` ***
+## Dupliquer le fichier `.env` et le renommer `.env.local` 
 
     * Mettre vos informations de **connexion** à la base de donnée
 
@@ -48,9 +48,9 @@
         openssl genrsa -out config/jwt/private.pem -aes256 4096
         ```
 
-** Mettre vos variables d'environnement **Mailtrap** **
+## Mettre vos variables d'environnement **Mailtrap**
 
-** Faire tourner Messenger pour les tâches asynchrone comme l'envoie de mail :
+## Faire tourner Messenger pour les tâches asynchrone comme l'envoie de mail :
 
     ```bash
     php bin/console messenger:consume async -vv
