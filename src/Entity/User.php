@@ -6,8 +6,6 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;
 use App\DataPersister\UserDataPersister;
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -49,17 +47,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     #[Groups(['user:write'])]
     private ?string $password = null;
-
-    /**
-     * @var Collection<int, Scenario>
-     */
-    #[ORM\OneToMany(targetEntity: Scenario::class, mappedBy: 'user')]
-    private Collection $scenarios;
-
-    public function __construct()
-    {
-        $this->scenarios = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -134,35 +121,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    /**
-     * @return Collection<int, Scenario>
-     */
-    public function getScenarios(): Collection
-    {
-        return $this->scenarios;
-    }
-
-    public function addScenario(Scenario $scenario): static
-    {
-        if (!$this->scenarios->contains($scenario)) {
-            $this->scenarios->add($scenario);
-            $scenario->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeScenario(Scenario $scenario): static
-    {
-        if ($this->scenarios->removeElement($scenario)) {
-            // set the owning side to null (unless already changed)
-            if ($scenario->getUser() === $this) {
-                $scenario->setUser(null);
-            }
-        }
-
-        return $this;
     }
 }
