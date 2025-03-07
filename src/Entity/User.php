@@ -24,6 +24,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
         )
     ]
 )]
+
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -47,6 +48,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     #[Groups(['user:write'])]
     private ?string $password = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['user:write'])]
+    private ?string $pseudo = null;
+
+    #[ORM\Column]
+    private ?bool $isBan = null;
 
     public function getId(): ?int
     {
@@ -121,5 +129,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(?string $pseudo): static
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function isBan(): ?bool
+    {
+        return $this->isBan;
+    }
+
+    public function setIsBan(bool $isBan): static
+    {
+        $this->isBan = $isBan;
+
+        return $this;
     }
 }
