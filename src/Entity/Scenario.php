@@ -2,29 +2,52 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\ScenarioRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ScenarioRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(normalizationContext: ['groups' => ['scenario:read']]),
+        new GetCollection(normalizationContext: ['groups' => ['scenario:read']]),
+        new Post(denormalizationContext: ['groups' => ['scenario:read']]),
+        new Patch(denormalizationContext: ['groups' => ['scenario:read']]),
+        new Delete(),
+    ]
+)]
+
 class Scenario
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['scenario:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['scenario:read'])]
     private ?string $name = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['scenario:read'])]
+    private ?string $content = null;
+
     #[ORM\Column(nullable: true)]
+    #[Groups(['scenario:read'])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['scenario:read'])]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $content = null;
 
     public function getId(): ?int
     {
