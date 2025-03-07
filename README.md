@@ -42,7 +42,7 @@
     ```bash
         openssl genrsa -out config/jwt/private.pem -aes256 4096
     ```
-    (mettre à jour le `.env.local` )
+    (mettre à jour le `.env.local` // passphrase )
 
     ```bash
     openssl genrsa -out config/jwt/private.pem -aes256 4096
