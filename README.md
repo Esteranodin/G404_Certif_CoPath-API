@@ -3,7 +3,7 @@
 
 # Instructions non exhaustives : 
 
-## Installer les dépendances 
+## Installer les dépendances & bundles nécessaires
 
     ```bash
     composer install
