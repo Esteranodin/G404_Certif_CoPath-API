@@ -10,6 +10,8 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\DataPersister\ScenarioDataPersister;
 use App\Repository\ScenarioRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -69,6 +71,17 @@ class Scenario
 
     #[ORM\ManyToOne(inversedBy: 'scenarios')]
     private ?User $user = null;
+
+    /**
+     * @var Collection<int, Campaign>
+     */
+    #[ORM\ManyToMany(targetEntity: Campaign::class, inversedBy: 'scenarios')]
+    private Collection $campaign;
+
+    public function __construct()
+    {
+        $this->campaign = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -132,6 +145,30 @@ class Scenario
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Campaign>
+     */
+    public function getCampaign(): Collection
+    {
+        return $this->campaign;
+    }
+
+    public function addCampaign(Campaign $campaign): static
+    {
+        if (!$this->campaign->contains($campaign)) {
+            $this->campaign->add($campaign);
+        }
+
+        return $this;
+    }
+
+    public function removeCampaign(Campaign $campaign): static
+    {
+        $this->campaign->removeElement($campaign);
 
         return $this;
     }
