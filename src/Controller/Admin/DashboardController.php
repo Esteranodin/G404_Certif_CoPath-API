@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Campaign;
 use App\Entity\Scenario;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
@@ -56,5 +57,6 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Scénarios');
         yield MenuItem::linkToCrud('Scénarios', 'fas fa-list', Scenario::class);
+        yield MenuItem::linkToCrud('Campagnes', 'fas fa-list', Campaign::class);
     }
 }
