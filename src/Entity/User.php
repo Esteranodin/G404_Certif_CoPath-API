@@ -6,6 +6,8 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;
 use App\DataPersister\UserDataPersister;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -55,6 +57,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?bool $isBan = null;
+
+    /**
+     * @var Collection<int, Campaign>
+     */
+    #[ORM\OneToMany(targetEntity: Campaign::class, mappedBy: 'user')]
+    private Collection $campaigns;
+
+    public function __construct()
+    {
+        $this->campaigns = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -151,6 +164,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsBan(bool $isBan): static
     {
         $this->isBan = $isBan;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Campaign>
+     */
+    public function getCampaigns(): Collection
+    {
+        return $this->campaigns;
+    }
+
+    public function addCampaign(Campaign $campaign): static
+    {
+        if (!$this->campaigns->contains($campaign)) {
+            $this->campaigns->add($campaign);
+            $campaign->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCampaign(Campaign $campaign): static
+    {
+        if ($this->campaigns->removeElement($campaign)) {
+            // set the owning side to null (unless already changed)
+            if ($campaign->getUser() === $this) {
+                $campaign->setUser(null);
+            }
+        }
 
         return $this;
     }

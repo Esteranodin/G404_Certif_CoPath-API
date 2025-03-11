@@ -55,8 +55,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Users');
         yield MenuItem::linkToCrud('Users', 'fas fa-list', User::class);
 
-        yield MenuItem::section('Scénarios');
-        yield MenuItem::linkToCrud('Scénarios', 'fas fa-list', Scenario::class);
-        yield MenuItem::linkToCrud('Campagnes', 'fas fa-list', Campaign::class);
+        yield MenuItem::section('Scenarios');
+        yield MenuItem::linkToCrud('Scenarios', 'fas fa-list', Scenario::class);
+        yield MenuItem::linkToCrud('Campaigns', 'fas fa-list', Campaign::class);
     }
 }

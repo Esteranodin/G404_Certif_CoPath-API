@@ -76,6 +76,7 @@ class Scenario
      * @var Collection<int, Campaign>
      */
     #[ORM\ManyToMany(targetEntity: Campaign::class, inversedBy: 'scenarios')]
+    #[Groups(['scenario:read', 'scenario:write'])]
     private Collection $campaign;
 
     public function __construct()
