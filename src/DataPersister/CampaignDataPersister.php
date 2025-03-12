@@ -5,7 +5,7 @@ namespace App\DataPersister;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\State\ProcessorInterface;
-use App\Entity\Scenario;
+use App\Entity\Campaign;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 
@@ -16,9 +16,9 @@ class CampaignDataPersister implements ProcessorInterface
         private readonly Security $security
     ) {}
 
-    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): Scenario
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): Campaign
     {
-        if ($data instanceof Scenario && $operation instanceof Post) {
+        if ($data instanceof Campaign && $operation instanceof Post) {
             $data->setUser($this->security->getUser());
         }
 

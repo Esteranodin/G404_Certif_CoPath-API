@@ -70,6 +70,7 @@ class Scenario
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'scenarios')]
+    #[Groups(['scenario:read'])]
     private ?User $user = null;
 
     /**

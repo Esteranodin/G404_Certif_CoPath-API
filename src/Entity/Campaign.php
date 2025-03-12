@@ -63,11 +63,11 @@ class Campaign
      * @var Collection<int, Scenario>
      */
     #[ORM\ManyToMany(targetEntity: Scenario::class, mappedBy: 'campaign')]
-    #[Groups(['campaign:read', 'campaign:write'])]
+    #[Groups(['campaign:read'])]
     private Collection $scenarios;
 
     #[ORM\ManyToOne(inversedBy: 'campaigns')]
-    #[Groups(['campaign:read', 'campaign:write'])]
+    #[Groups(['campaign:read'])]
     private ?User $user = null;
 
     public function __construct()

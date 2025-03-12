@@ -1,3 +1,6 @@
 * penser a gérer le ban avec booléan
 
-** regarder comment log sur bookmarker pour dashboard
+** faire role et conncetion pour dashboard
+
+gerer la secu des roles avce possibilité de créer des campagnes que en super user par exemple
+
