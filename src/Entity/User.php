@@ -59,14 +59,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $isBan = null;
 
     /**
+     * @var Collection<int, Scenario>
+     */
+    #[ORM\OneToMany(targetEntity: Scenario::class, mappedBy: 'user')]
+    private Collection $scenarios;
+    /**
      * @var Collection<int, Campaign>
      */
     #[ORM\OneToMany(targetEntity: Campaign::class, mappedBy: 'user')]
     private Collection $campaigns;
 
+
     public function __construct()
     {
         $this->campaigns = new ArrayCollection();
+        $this->scenarios = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -192,6 +199,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($campaign->getUser() === $this) {
                 $campaign->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Scenario>
+     */
+    public function getScenarios(): Collection
+    {
+        return $this->scenarios;
+    }
+
+    public function addScenario(Scenario $scenario): static
+    {
+        if (!$this->scenarios->contains($scenario)) {
+            $this->scenarios->add($scenario);
+            $scenario->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScenario(Scenario $scenario): static
+    {
+        if ($this->scenarios->removeElement($scenario)) {
+            // set the owning side to null (unless already changed)
+            if ($scenario->getUser() === $this) {
+                $scenario->setUser(null);
             }
         }
 

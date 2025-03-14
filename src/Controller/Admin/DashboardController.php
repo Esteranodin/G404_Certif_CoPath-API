@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Campaign;
+use App\Entity\ImgScenario;
+use App\Entity\Music;
 use App\Entity\Scenario;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
@@ -57,6 +59,10 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Scenarios');
         yield MenuItem::linkToCrud('Scenarios', 'fas fa-list', Scenario::class);
+        yield MenuItem::linkToCrud('Pictures', 'fas fa-list', ImgScenario::class);
+        yield MenuItem::linkToCrud('Music', 'fas fa-list', Music::class);
+        
+        yield MenuItem::section('Campaigns');
         yield MenuItem::linkToCrud('Campaigns', 'fas fa-list', Campaign::class);
     }
 }

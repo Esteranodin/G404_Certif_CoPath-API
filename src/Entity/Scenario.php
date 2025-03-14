@@ -70,7 +70,6 @@ class Scenario
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'scenarios')]
-    #[Groups(['scenario:read'])]
     private ?User $user = null;
 
     /**
@@ -80,9 +79,24 @@ class Scenario
     #[Groups(['scenario:read', 'scenario:write'])]
     private Collection $campaign;
 
+    /**
+     * @var Collection<int, Music>
+     */
+    #[ORM\OneToMany(targetEntity: Music::class, mappedBy: 'scenario')]
+    private Collection $music;
+
+    /**
+     * @var Collection<int, ImgScenario>
+     */
+    #[ORM\OneToMany(targetEntity: ImgScenario::class, mappedBy: 'scenario')]
+    private Collection $img;
+
+
     public function __construct()
     {
         $this->campaign = new ArrayCollection();
+        $this->music = new ArrayCollection();
+        $this->img = new ArrayCollection();
     }
 
 
@@ -139,18 +153,6 @@ class Scenario
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Campaign>
      */
@@ -171,6 +173,78 @@ class Scenario
     public function removeCampaign(Campaign $campaign): static
     {
         $this->campaign->removeElement($campaign);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Music>
+     */
+    public function getMusic(): Collection
+    {
+        return $this->music;
+    }
+
+    public function addMusic(Music $music): static
+    {
+        if (!$this->music->contains($music)) {
+            $this->music->add($music);
+            $music->setScenario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMusic(Music $music): static
+    {
+        if ($this->music->removeElement($music)) {
+            // set the owning side to null (unless already changed)
+            if ($music->getScenario() === $this) {
+                $music->setScenario(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ImgScenario>
+     */
+    public function getImg(): Collection
+    {
+        return $this->img;
+    }
+
+    public function addImg(ImgScenario $img): static
+    {
+        if (!$this->img->contains($img)) {
+            $this->img->add($img);
+            $img->setScenario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImg(ImgScenario $img): static
+    {
+        if ($this->img->removeElement($img)) {
+            // set the owning side to null (unless already changed)
+            if ($img->getScenario() === $this) {
+                $img->setScenario(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

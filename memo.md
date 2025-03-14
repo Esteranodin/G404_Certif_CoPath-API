@@ -2,5 +2,5 @@
 
 ** faire role et conncetion pour dashboard
 
-gerer la secu des roles avce possibilité de créer des campagnes que en super user par exemple
+gerer la secu des roles avec possibilité de créer des campagnes que en super user par exemple
 
