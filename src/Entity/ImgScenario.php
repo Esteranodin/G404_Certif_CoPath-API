@@ -3,12 +3,45 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use App\DataPersister\ImgScenarioDataPersister;
+use App\DataPersister\ScenarioDataPersister;
 use App\Repository\ImgScenarioRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ImgScenarioRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new Get(
+            normalizationContext: ['groups' => ['scenario:read']],
+            security: "is_granted('PUBLIC_ACCESS')"
+        ),
+        new GetCollection(
+            normalizationContext: ['groups' => ['scenario:read']],
+            security: "is_granted('PUBLIC_ACCESS')"
+        ),
+        new Post(
+            denormalizationContext: ['groups' => ['scenario:write']],
+            security: "is_granted('ROLE_USER')",
+            processor: ScenarioDataPersister::class,
+            securityMessage: "Seuls les utilisateurs connectés peuvent partager des scénarios"
+        ),
+        new Patch(
+            denormalizationContext: ['groups' => ['scenario:write']],
+            security: "is_granted('SCENARIO_EDIT', object)",
+            securityMessage: "Vous ne pouvez modifier que vos propres scénarios"
+        ),
+        new Delete(
+            security: "is_granted('SCENARIO_DELETE', object)",
+            securityMessage: "Vous ne pouvez supprimer que vos propres scénarios"
+        ),
+    ]
+)]
 class ImgScenario
 {
     #[ORM\Id]

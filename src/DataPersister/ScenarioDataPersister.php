@@ -22,6 +22,9 @@ class ScenarioDataPersister implements ProcessorInterface
             $data->setUser($this->security->getUser());
         }
 
+       
+// data = scenario masi il faut passer par la requete directement avant hydratation objet scenario mais plutot gerer moi meme creation et chemin et persiste
+
         $this->entityManager->persist($data);
         $this->entityManager->flush();
 

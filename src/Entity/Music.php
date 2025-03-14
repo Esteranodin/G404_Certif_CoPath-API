@@ -3,12 +3,44 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use App\DataPersister\MusicDataPersister;
 use App\Repository\MusicRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: MusicRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new Get(
+            normalizationContext: ['groups' => ['scenario:read']],
+            security: "is_granted('PUBLIC_ACCESS')"
+        ),
+        new GetCollection(
+            normalizationContext: ['groups' => ['scenario:read']],
+            security: "is_granted('PUBLIC_ACCESS')"
+        ),
+        new Post(
+            denormalizationContext: ['groups' => ['scenario:write']],
+            security: "is_granted('ROLE_USER')",
+            processor: MusicDataPersister::class,
+            securityMessage: "Seuls les utilisateurs connectés peuvent partager des scénarios"
+        ),
+        new Patch(
+            denormalizationContext: ['groups' => ['scenario:write']],
+            security: "is_granted('SCENARIO_EDIT', object)",
+            securityMessage: "Vous ne pouvez modifier que vos propres scénarios"
+        ),
+        new Delete(
+            security: "is_granted('SCENARIO_DELETE', object)",
+            securityMessage: "Vous ne pouvez supprimer que vos propres scénarios"
+        ),
+    ]
+)]
 class Music
 {
     #[ORM\Id]
