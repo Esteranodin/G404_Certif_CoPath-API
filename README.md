@@ -60,5 +60,6 @@
 
 # TO DO / FINISH
 
+* Finir API / db
 * Mettre tous les **Asserts**
 * Verifier les **Flash**
