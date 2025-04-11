@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use App\DataPersister\UserDataPersister;
 use App\Repository\UserRepository;
+use App\Provider\MeProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,6 +25,13 @@ use Symfony\Component\Serializer\Attribute\Groups;
             validationContext: ['groups' => ['Default']],
             security: "is_granted('PUBLIC_ACCESS')",
             processor: UserDataPersister::class
+        ),
+        new Get(
+            uriTemplate: '/me',
+            normalizationContext: ['groups' => ['user:read']],
+            security: "is_granted('ROLE_USER')",
+            securityMessage: 'You do not have access to this resource.',
+            provider: MeProvider::class
         )
     ]
 )]
@@ -35,7 +44,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['user:write'])]
+    #[Groups(['user:write'], ['user:read'])]
     private ?string $email = null;
 
     /**
@@ -52,7 +61,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['user:write'])]
+    #[Groups(['user:write'], ['user:read'])]
     private ?string $pseudo = null;
 
     #[ORM\Column(nullable: true)]
