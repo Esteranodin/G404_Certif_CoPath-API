@@ -16,6 +16,24 @@ class ScenarioRepository extends ServiceEntityRepository
         parent::__construct($registry, Scenario::class);
     }
 
+    /**
+     * @return Scenario[] Returns an array of Scenario objects
+     */
+    public function findByTitle(?string $title = null): array
+    {
+        $qb = $this->createQueryBuilder('s');
+
+        if ($title) {
+            $qb ->andWhere('s.title LIKE :title')
+                ->setParameter('title', '%' . $title . '%');
+        }
+                
+        return $qb->orderBy('s.createdAt', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Scenario[] Returns an array of Scenario objects
     //     */

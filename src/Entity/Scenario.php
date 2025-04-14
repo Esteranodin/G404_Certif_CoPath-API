@@ -8,8 +8,13 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+
 use App\DataPersister\ScenarioDataPersister;
 use App\Repository\ScenarioRepository;
+use App\Entity\Interfaces\HasCreatedAtInterface;
+use App\Entity\Interfaces\HasUpdatedAtInterface;
+use App\Entity\Interfaces\HasUserInterface;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -45,7 +50,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
     ]
 )]
 
-class Scenario
+class Scenario implements HasCreatedAtInterface, HasUpdatedAtInterface, HasUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

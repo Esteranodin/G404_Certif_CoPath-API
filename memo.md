@@ -1,10 +1,16 @@
+SUPPRIMER etat nullable de ce qui ne le sera pas
+
+
 * penser a gérer le ban avec booléan
 
-** faire role et conncetion pour dashboard
+** faire role et connection pour dashboard
++ finir dashboard not. tout mettre en français
+
+*** ajouter contraintes de validation (Assertions)
+
+** ** TESTS UNITAIRES (cf. projet API-TestUnitaire)
 
 gerer la secu des roles avec possibilité de créer des campagnes que en super user par exemple
-
-SUPPRIMER etat nullable de ce qui ne le sera pas
 
 
 Entités music et img créées maintenant il faut pouvoir faire en sorte que seul l'utlisateur qui a crée le scénar puisse ajouter/modifier image ou music sur le scenar selectionner via le datapersister du scenario

@@ -6,27 +6,30 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\State\ProcessorInterface;
 use App\Entity\Scenario;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\SecurityBundle\Security;
+use App\Service\ScenarioService;
 
-class ScenarioDataPersister implements ProcessorInterface
+class ScenarioDataPersister extends AbstractDataPersister implements ProcessorInterface
 {
+    protected function processSpecific(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): void
+    {
+        if (!$data instanceof Scenario) {
+            return;
+        }
+    }
+
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
-        private readonly Security $security
+        private readonly ScenarioService $scenarioService,
     ) {}
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): Scenario
     {
         if ($data instanceof Scenario && $operation instanceof Post) {
-            $data->setUser($this->security->getUser());
+            return $this->scenarioService->createScenario($data);
         }
 
-       
-// data = scenario masi il faut passer par la requete directement avant hydratation objet scenario mais plutot gerer moi meme creation et chemin et persiste
-
-        $this->entityManager->persist($data);
-        $this->entityManager->flush();
+        if ($data instanceof Scenario) {
+            $data->setUpdatedAt(new \DateTimeImmutable());
+        }
 
         return $data;
     }
