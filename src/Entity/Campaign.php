@@ -9,6 +9,9 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\DataPersister\CampaignDataPersister;
+use App\Entity\Interfaces\HasCreatedAtInterface;
+use App\Entity\Interfaces\HasUpdatedAtInterface;
+use App\Entity\Interfaces\HasUserInterface;
 use App\Repository\CampaignRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -43,7 +46,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ),
     ]
 )]
-class Campaign
+class Campaign implements HasCreatedAtInterface, HasUpdatedAtInterface, HasUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

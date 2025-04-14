@@ -51,6 +51,11 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
+        # - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        # - { path: ^/api/register, roles: PUBLIC_ACCESS }
+        # - { path: ^/api, roles: IS_AUTHENTICATED_FULLY, methods: [POST, PUT, PATCH, DELETE] }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+
 when@test:
     security:
         password_hashers:

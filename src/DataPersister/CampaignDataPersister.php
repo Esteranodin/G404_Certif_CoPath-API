@@ -10,11 +10,19 @@ use App\Entity\Campaign;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 
-class CampaignDataPersister implements ProcessorInterface
+class CampaignDataPersister extends AbstractDataPersister implements ProcessorInterface
 {
+
+    protected function processSpecific(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): void
+    {
+        if (!$data instanceof Campaign) {
+            return;
+        }
+    }
+
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
-        private readonly Security $security
+        protected readonly EntityManagerInterface $entityManager,
+        protected readonly Security $security
     ) {}
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): Campaign
