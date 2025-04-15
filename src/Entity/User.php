@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\DataPersister\UserDataPersister;
 use App\Repository\UserRepository;
@@ -32,7 +33,14 @@ use Symfony\Component\Serializer\Attribute\Groups;
             security: "is_granted('ROLE_USER')",
             securityMessage: 'You do not have access to this resource.',
             provider: MeProvider::class
-        )
+        ),
+        new Patch(
+            uriTemplate: '/me',
+            denormalizationContext: ['groups' => ['user:write']],
+            validationContext: ['groups' => ['Default']],
+            security: "is_granted('PUBLIC_ACCESS')",
+            processor: UserDataPersister::class
+        ),
     ]
 )]
 
@@ -77,6 +85,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Campaign::class, mappedBy: 'user')]
     private Collection $campaigns;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $avatar = null;
 
 
     public function __construct()
@@ -240,6 +251,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $scenario->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): static
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }
