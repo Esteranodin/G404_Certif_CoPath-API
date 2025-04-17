@@ -68,7 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['user:write'])]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 17, unique: true, nullable: true)]
     #[Groups(['user:write'], ['user:read'])]
     private ?string $pseudo = null;
 
