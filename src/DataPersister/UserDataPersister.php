@@ -1,5 +1,5 @@
 <?php
-// Ce fichier est a créer dans src/DataPersister
+
 namespace App\DataPersister;
 
 use ApiPlatform\Metadata\Operation;

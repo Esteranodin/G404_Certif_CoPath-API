@@ -4,7 +4,8 @@ SUPPRIMER etat nullable de ce qui ne le sera pas
 * penser a gérer le ban avec booléan
 
 ** faire role et connection pour dashboard
-+ finir dashboard not. tout mettre en français
++ finir dashboard not. tout mettre en français ou en anglais mais uniformiser
++ faire en sorte que si campagne ou scénario créé via dashboard id admin en user_id ?
 
 *** ajouter contraintes de validation (Assertions)
 

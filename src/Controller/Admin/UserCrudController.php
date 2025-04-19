@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use App\Service\PasswordHashService;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -13,8 +15,16 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
+
 class UserCrudController extends AbstractCrudController
 {
+    private PasswordHashService $passwordHashService;
+        
+    public function __construct(PasswordHashService $passwordHashService)
+    {
+        $this->passwordHashService = $passwordHashService;
+    }
+
     public static function getEntityFqcn(): string
     {
         return User::class;
@@ -26,6 +36,10 @@ class UserCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             EmailField::new('email'),
             TextField::new('pseudo'),
+            TextField::new('plainPassword')
+                ->setLabel('Password')
+                ->onlyOnForms()
+                ->setRequired($pageName === Crud::PAGE_NEW),
             ChoiceField::new('roles')
                 ->setChoices([
                     'Utilisateur' => 'ROLE_USER',
@@ -36,7 +50,6 @@ class UserCrudController extends AbstractCrudController
             BooleanField::new('isBan'),
         ];
     }
-
 
     public function configureCrud(Crud $crud): Crud
     {
@@ -55,4 +68,23 @@ class UserCrudController extends AbstractCrudController
                 return $action->setLabel('Créer un utilisateur');
             });
     }
+
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        if ($entityInstance instanceof User) {
+            $this->passwordHashService->hashUserPassword($entityInstance);
+        }
+        
+        parent::persistEntity($entityManager, $entityInstance);
+    }
+
+    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        if ($entityInstance instanceof User) {
+            $this->passwordHashService->hashUserPassword($entityInstance);
+        }
+        
+        parent::updateEntity($entityManager, $entityInstance);
+    }
+ 
 }

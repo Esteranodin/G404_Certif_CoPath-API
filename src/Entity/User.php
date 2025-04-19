@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\Ignore;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -68,10 +69,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['user:write'])]
     private ?string $password = null;
 
+    /**
+     * @var string The plain password
+     */
+    #[Ignore]
+    private ?string $plainPassword = null;
+
+    /**
+     * @var string The pseudo of the user
+     */
     #[ORM\Column(length: 17, unique: true, nullable: true)]
     #[Groups(['user:write'], ['user:read'])]
     private ?string $pseudo = null;
 
+    /**
+     * @var bool|null Indicates if the user is banned
+     */
     #[ORM\Column(nullable: true)]
     private ?bool $isBan = null;
 
@@ -80,12 +93,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Scenario::class, mappedBy: 'user')]
     private Collection $scenarios;
+
     /**
      * @var Collection<int, Campaign>
      */
     #[ORM\OneToMany(targetEntity: Campaign::class, mappedBy: 'user')]
     private Collection $campaigns;
 
+    /**
+     * @var string The picture avatar of the user
+     */
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $avatar = null;
 
@@ -163,12 +180,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+    public function setPlainPassword(?string $plainPassword): static
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
      * @see UserInterface
      */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
     }
 
     public function getPseudo(): ?string
