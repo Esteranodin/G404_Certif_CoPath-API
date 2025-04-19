@@ -44,15 +44,25 @@ Si la commande ne fonctionne pas, créez le dossier config/jwt à la main et ouv
 (mettre à jour le `.env.local` // passphrase )
 
 ```bash
-openssl genrsa -out config/jwt/private.pem -aes256 4096
+    openssl genrsa -out config/jwt/private.pem -aes256 4096
+```
+
+## Lancer le serveur
+```bash
+    symfony server:start
+```
+
+## Couper le serveur
+```bash
+    symfony server:stop
 ```
 
 ## Ajouter vos variables d'environnement **Mailtrap**
 
-* Ensuite, faîtes tourner Messenger pour les tâches asynchrone comme l'envoie de mail :
+Ensuite, faîtes tourner Messenger pour les tâches asynchrone comme l'envoie de mail :
 
 ```bash
-php bin/console messenger:consume async -vv
+    php bin/console messenger:consume async -vv
 ```
 
 <!-- * Les **icones** : https://fontawesome.com/v4/icons/ -->
