@@ -1,5 +1,4 @@
 <?php
-
 namespace App\DataPersister;
 
 use ApiPlatform\Metadata\Operation;

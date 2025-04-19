@@ -26,8 +26,9 @@ class AdminAuthenticatorController extends AbstractController
     }
 
     #[Route(path: '/admin/logout', name: 'admin_logout')]
-    public function logout(): void
+    public function logout() : never
     {
+        // Si on arrive ici, c'est que la route n'est pas configurée dans le firewall
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }

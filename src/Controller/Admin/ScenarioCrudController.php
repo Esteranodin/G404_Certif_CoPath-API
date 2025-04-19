@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Campaign;
 use App\Entity\Interfaces\HasCreatedAtInterface;
 use App\Entity\Interfaces\HasUpdatedAtInterface;
 use App\Entity\Scenario;
@@ -13,15 +14,16 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class ScenarioCrudController extends AbstractCrudController
 {
-    // private Security $security;
+    private Security $security;
 
-    // public function __construct(Security $security)
-    // {
-    //     $this->security = $security;
-    // }
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
 
     public static function getEntityFqcn(): string
     {
@@ -47,7 +49,6 @@ class ScenarioCrudController extends AbstractCrudController
         ];
     }
 
-    // quand connexion pour dashboard admin + decommenté le construct et le use de Security
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
         if ($entityInstance instanceof HasCreatedAtInterface) {
@@ -57,11 +58,11 @@ class ScenarioCrudController extends AbstractCrudController
             $entityInstance->setUpdatedAt(new \DateTimeImmutable());
         }
 
-        //     if ($entityInstance instanceof Campaign && $entityInstance->getUser() === null) {
-        //         $user = $this->security->getUser();
+        if ($entityInstance instanceof Campaign && $entityInstance->getUser() === null) {
+            $user = $this->security->getUser();
 
-        parent::persistEntity($entityManager, $entityInstance);
-        //     }
+            parent::persistEntity($entityManager, $entityInstance);
+        }
     }
 
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void

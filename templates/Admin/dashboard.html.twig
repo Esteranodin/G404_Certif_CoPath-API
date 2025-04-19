@@ -1,1 +1,95 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block page_title %}Tableau de bord administrateur
+{% endblock %}
+
+{% block content %}
+	<div class="row mb-4">
+		<h2>Statistiques générales</h2>
+
+		<h5 class="mb-0">Utilisateurs</h5>
+
+		<span class="display-4">{{ userCount }}</span>
+		<a href="{{ ea_url().setController('App\\Controller\\Admin\\UserCrudController') }}" class="btn btn-sm btn-primary">Gérer les utilisateurs</a>
+		<h5 class="mb-0">Campagnes</h5>
+		<span class="display-4">{{ campaignCount }}</span>
+		<a href="{{ ea_url().setController('App\\Controller\\Admin\\CampaignCrudController') }}" class="btn btn-sm btn-success">Gérer les campagnes</a>
+
+		<h5 class="mb-0">Scénarios</h5>
+		<span class="display-4">{{ scenarioCount }}</span>
+		<a href="{{ ea_url().setController('App\\Controller\\Admin\\ScenarioCrudController') }}" class="btn btn-sm btn-info">Gérer les scénarios</a>
+
+		<h2>Derniers utilisateurs</h2>
+
+		<h5 class="mb-0">Utilisateurs récemment inscrits</h5>
+		<table class="table table-striped mb-0">
+			<thead>
+				<tr>
+					<th>Pseudo</th>
+					<th>Email</th>
+					<th>Rôles</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for user in recentUsers %}
+					<tr>
+						<td>{{ user.pseudo }}</td>
+						<td>{{ user.email }}</td>
+						<td>
+							{% for role in user.roles %}
+								<span class="badge badge-secondary">{{ role }}</span>
+							{% endfor %}
+						</td>
+						<td>
+							<a href="{{ ea_url().setController('App\\Controller\\Admin\\UserCrudController').setAction('detail').setEntityId(user.id) }}" class="btn btn-sm btn-info">
+								<i class="fa fa-eye"></i>
+							</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4" class="text-center">Aucun utilisateur trouvé</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<h2>Contenu récent</h2>
+		<h5 class="mb-0">Dernières campagnes</h5>
+		<ul class="list-group list-group-flush">
+			{% for campaign in recentCampaigns %}
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+					<div>
+						<strong>{{ campaign.name }}</strong>
+						<br>
+						<small class="text-muted">Créée le
+							{{ campaign.createdAt|date('d/m/Y') }}</small>
+					</div>
+					<a href="{{ ea_url().setController('App\\Controller\\Admin\\CampaignCrudController').setAction('detail').setEntityId(campaign.id) }}" class="btn btn-sm btn-success">
+						<i class="fa fa-eye"></i>
+					</a>
+				</li>
+			{% else %}
+				<li class="list-group-item">Aucune campagne trouvée</li>
+			{% endfor %}
+		</ul>
+		<h5 class="mb-0">Derniers scénarios</h5>
+		<ul class="list-group list-group-flush">
+			{% for scenario in recentScenarios %}
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+					<div>
+						<strong>{{ scenario.title }}</strong>
+						<br>
+						<small class="text-muted">Créé le
+							{{ scenario.createdAt|date('d/m/Y') }}</small>
+					</div>
+					<a href="{{ ea_url().setController('App\\Controller\\Admin\\ScenarioCrudController').setAction('detail').setEntityId(scenario.id) }}" class="btn btn-sm btn-info">
+						<i class="fa fa-eye"></i>
+					</a>
+				</li>
+			{% else %}
+				<li class="list-group-item">Aucun scénario trouvé</li>
+			{% endfor %}
+		</ul>
+	{% endblock %}
