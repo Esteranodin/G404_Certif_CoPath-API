@@ -83,26 +83,26 @@ class DashboardController extends AbstractDashboardController
             ->setTitle('CoPath')
             ->setFaviconPath('favicon.png')
             ->setDefaultColorScheme('dark')
-
+            ->setLocales(['fr'])
             ;
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-desktop');
+        yield MenuItem::linkToDashboard('Accueil', 'fa fa-desktop');
         // mettre à jour la route pour le retour au site
-        yield MenuItem::linktoRoute('Back to the website', 'fas fa-home', 'app_home');
+        yield MenuItem::linktoRoute('Retourner au site CoPath', 'fas fa-home', 'app_home');
         yield MenuItem::linkToLogout('Déconnexion', 'fa fa-sign-out');
 
-        yield MenuItem::section('Users');
-        yield MenuItem::linkToCrud('Users', 'fas fa-list', User::class);
+        yield MenuItem::section('--- Utilisateurs ---', 'fa fa-users');
+        yield MenuItem::linkToCrud('Liste des utilisateurs', 'fa-solid fa-ghost', User::class);
 
-        yield MenuItem::section('Scenarios');
-        yield MenuItem::linkToCrud('Scenarios', 'fas fa-list', Scenario::class);
-        yield MenuItem::linkToCrud('Pictures', 'fas fa-list', ImgScenario::class);
-        yield MenuItem::linkToCrud('Music', 'fas fa-list', Music::class);
+        yield MenuItem::section('--- Scénarios ---', 'fa-solid fa-wand-magic-sparkles');
+        yield MenuItem::linkToCrud('Scénarios', 'fa-solid fa-pencil', Scenario::class);
+        yield MenuItem::linkToCrud('Images', 'fa-solid fa-image', ImgScenario::class);
+        yield MenuItem::linkToCrud('Musiques', 'fa-solid fa-headphones', Music::class);
 
-        yield MenuItem::section('Campaigns');
-        yield MenuItem::linkToCrud('Campaigns', 'fas fa-list', Campaign::class);
+        yield MenuItem::section('--- Campagnes ---', 'fa-solid fa-book-open');
+        yield MenuItem::linkToCrud('Campagnes', 'fa-solid fa-shield', Campaign::class);
     }
 }

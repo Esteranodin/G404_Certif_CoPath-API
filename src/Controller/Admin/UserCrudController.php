@@ -15,11 +15,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-
 class UserCrudController extends AbstractCrudController
 {
     private PasswordHashService $passwordHashService;
-        
+
     public function __construct(PasswordHashService $passwordHashService)
     {
         $this->passwordHashService = $passwordHashService;
@@ -46,6 +45,8 @@ class UserCrudController extends AbstractCrudController
                     'Administrateur' => 'ROLE_ADMIN'
                 ])
                 ->allowMultipleChoices()
+                ->setFormTypeOption('multiple', true)
+                ->setFormTypeOption('mapped', true)
                 ->onlyOnForms(),
             BooleanField::new('isBan'),
         ];
@@ -57,15 +58,27 @@ class UserCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('Utilisateur')
             ->setEntityLabelInPlural('Utilisateurs')
             ->setSearchFields(['email', 'pseudo'])
-            ->setDefaultSort(['id' => 'DESC']);
+            ->setPageTitle('edit', 'Modifier un utilisateur')
+            ->setPageTitle('new', 'Créer un utilisateur');
     }
 
     public function configureActions(Actions $actions): Actions
     {
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
-            ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
-                return $action->setLabel('Créer un utilisateur');
+            // Les traductions sont maintenant gérées par les fichiers de traduction!
+            // Tu n'as besoin de conserver que les redirections spécifiques
+            ->update(Crud::PAGE_EDIT, Action::SAVE_AND_RETURN, function (Action $action) {
+                return $action->linkToRoute('admin', [
+                    'crudControllerFqcn' => self::class,
+                    'crudAction' => 'index',
+                ]);
+            })
+            ->update(Crud::PAGE_NEW, Action::SAVE_AND_RETURN, function (Action $action) {
+                return $action->linkToRoute('admin', [
+                    'crudControllerFqcn' => self::class,
+                    'crudAction' => 'index',
+                ]);
             });
     }
 
@@ -74,17 +87,32 @@ class UserCrudController extends AbstractCrudController
         if ($entityInstance instanceof User) {
             $this->passwordHashService->hashUserPassword($entityInstance);
         }
-        
+
         parent::persistEntity($entityManager, $entityInstance);
     }
 
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
         if ($entityInstance instanceof User) {
+            // Gestion du mot de passe
             $this->passwordHashService->hashUserPassword($entityInstance);
+            $roles = $entityInstance->getRoles();
+            // Si c'est un tableau associatif comme {"1": "ROLE_USER"}, on le convertit
+            if (is_array($roles)) {
+                // On extrait uniquement les valeurs et on ignore les clés
+                $cleanRoles = [];
+                foreach ($roles as $key => $role) {
+                    if (!empty($role) && is_string($role)) {
+                        $cleanRoles[] = $role;
+                    }
+                }
+                $cleanRoles = array_unique($cleanRoles);
+                if (empty($cleanRoles)) {
+                    $cleanRoles = ['ROLE_USER'];
+                }
+                $entityInstance->setRoles($cleanRoles);
+            }
         }
-        
         parent::updateEntity($entityManager, $entityInstance);
     }
- 
 }

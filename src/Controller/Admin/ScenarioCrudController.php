@@ -57,12 +57,12 @@ class ScenarioCrudController extends AbstractCrudController
         if ($entityInstance instanceof HasUpdatedAtInterface) {
             $entityInstance->setUpdatedAt(new \DateTimeImmutable());
         }
-
-        if ($entityInstance instanceof Campaign && $entityInstance->getUser() === null) {
+        // Assigner l'utilisateur connecté au scénario
+        if ($entityInstance instanceof Scenario) {
             $user = $this->security->getUser();
-
-            parent::persistEntity($entityManager, $entityInstance);
+            $entityInstance->setUser($user);
         }
+        parent::persistEntity($entityManager, $entityInstance);
     }
 
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
@@ -70,7 +70,6 @@ class ScenarioCrudController extends AbstractCrudController
         if ($entityInstance instanceof HasUpdatedAtInterface) {
             $entityInstance->setUpdatedAt(new \DateTimeImmutable());
         }
-
         parent::updateEntity($entityManager, $entityInstance);
     }
 }
