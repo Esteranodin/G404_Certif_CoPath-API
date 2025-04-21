@@ -7,8 +7,5 @@ controllers:
 # config/routes.yaml
 api_login_check:
     path: /api/login_check
-
-admin_logout:
-    path: /admin/logout
-    controller: App\Controller\AdminAuthenticatorController::logout
+    controller: App\Security\AdminFormAuthenticator::login
 

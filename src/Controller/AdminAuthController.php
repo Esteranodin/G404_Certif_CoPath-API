@@ -7,15 +7,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class AdminAuthenticatorController extends AbstractController
+class AdminAuthController extends AbstractController
 {
-    #[Route(path: '/admin/login', name: 'admin_login')]
+    #[Route('/admin/login', name: 'admin_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // Si user déjà connecté avec ROLE_ADMIN -> redirection dashboard
-        if ($this->getUser() && in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
-            return $this->redirectToRoute('admin');
-        }
+        // Récupérer l'erreur de login s'il y en a une
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
@@ -25,10 +22,10 @@ class AdminAuthenticatorController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/admin/logout', name: 'admin_logout')]
-    public function logout() : never
+    #[Route('/admin/logout', name: 'admin_logout')]
+    public function logout(): void
     {
-        // Si on arrive ici, c'est que la route n'est pas configurée dans le firewall
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        // Cette méthode sera interceptée par le système de sécurité
+        // Vous n'avez pas besoin d'implémenter de logique ici
     }
 }

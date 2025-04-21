@@ -22,4 +22,6 @@ et coté front = objet formdata
 
 update image pas patch mais post ==> donc 2 routes post (1 création et une pour update) car formdata
 
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
 

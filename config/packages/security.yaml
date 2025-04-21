@@ -27,21 +27,19 @@ security:
             stateless: true
             jwt: ~         
 
-        main:
-            lazy: true
-            provider: app_user_provider
-
         admin: 
             pattern: ^/admin
             lazy: true
             provider: app_user_provider
-            form_login:
-                login_path: admin_login
-                check_path: admin_login
-                default_target_path: admin
+            custom_authenticator: App\Security\AdminFormAuthenticator
+            entry_point: App\Security\AdminFormAuthenticator
             logout:
                 path: admin_logout
                 target: admin_login
+     
+        main:
+            lazy: true
+            provider: app_user_provider
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
