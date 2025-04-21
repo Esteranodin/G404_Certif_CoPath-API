@@ -1,14 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="CoPath - Application de partage de scénarios de jeux de rôle">
+        <meta name="robots" content="noindex, nofollow"> {# Pour un dashboard admin #}
 
-        {% block javascripts %}
-        {% endblock %}
+        <title>{% block title %}CoPath Admin{% endblock %}</title>
+        
+        <link rel="icon" href="{{ asset('favicon.png') }}">
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        
+        {% block stylesheets %}{% endblock %}
+        
+        {% block javascripts %}{% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}

@@ -1,95 +1,217 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
-{% block page_title %}Tableau de bord administrateur
+{% block page_title %}Tableau de bord
 {% endblock %}
 
 {% block content %}
-	<div class="row mb-4">
-		<h2>Statistiques générales</h2>
 
-		<h5 class="mb-0">Utilisateurs</h5>
+<div class="dashboard-wrapper">
+	<header class="content-header" aria-label="En-tête du tableau de bord">
+		<h1>Bienvenue dans l'admin CoPath</h1>
+	</header>
 
-		<span class="display-4">{{ userCount }}</span>
-		<a href="{{ ea_url().setController('App\\Controller\\Admin\\UserCrudController') }}" class="btn btn-sm btn-primary">Gérer les utilisateurs</a>
-		<h5 class="mb-0">Campagnes</h5>
-		<span class="display-4">{{ campaignCount }}</span>
-		<a href="{{ ea_url().setController('App\\Controller\\Admin\\CampaignCrudController') }}" class="btn btn-sm btn-success">Gérer les campagnes</a>
+	<section class="row" aria-label="Statistiques générales">
+		<div class="col-md-4">
+			<div class="card shadow-sm mb-4">
+				<div class="card-body d-flex align-items-center">
+					<div class="rounded-circle p-3 bg-info-subtle me-3">
+						<i class="fa fa-users fa-2x text-success"></i>
+					</div>
+					<div>
+						<h4 class="card-subtitle mb-1 text-light">Utilisateurs</h4>
+						<h2 class="card-title mb-0">{{ userCount }}</h2>
+					</div>
+					<div class="ms-auto">
+						<a href="{{ ea_url().setController('App\\Controller\\Admin\\UserCrudController') }}">
+							<button class="btn btn-outline-secondary" type="button">
+								<i class="fa fa-cog me-1"></i>
+								Gérer
+							</button>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-md-4">
+			<div class="card shadow-sm mb-4">
+				<div class="card-body d-flex align-items-center">
+					<div class="rounded-circle p-3 bg-danger-subtle me-3">
+						<i class="fa fa-map fa-2x text-danger"></i>
+					</div>
+					<div>
+						<h4 class="card-subtitle mb-1 text-light">Scénarios</h4>
+						<h2 class="card-title mb-0">{{ scenarioCount }}</h2>
+					</div>
+					<div class="ms-auto">
+						<a href="{{ ea_url().setController('App\\Controller\\Admin\\ScenarioCrudController') }}">
+							<button class="btn btn-outline-secondary" type="button">
+								<i class="fa fa-cog me-1"></i>
+								Gérer
+							</button>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>		
+	
+		<div class="col-md-4">
+			<div class="card shadow-sm mb-4">
+				<div class="card-body d-flex align-items-center">
+					<div class="rounded-circle p-3 bg-info-subtle me-3">
+					<i class="fa fa-bullhorn fa-2x text-info"></i>
+					</div>
+					<div>
+						<h4 class="card-subtitle mb-1 text-light">Campagnes</h4>
+						<h2 class="card-title mb-0">{{ campaignCount }}</h2>
+					</div>
+					<div class="ms-auto">
+						<a href="{{ ea_url().setController('App\\Controller\\Admin\\CampaignCrudController') }}">
+							<button class="btn btn-outline-secondary" type="button">
+								<i class="fa fa-cog me-1"></i>
+								Gérer
+							</button>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
-		<h5 class="mb-0">Scénarios</h5>
-		<span class="display-4">{{ scenarioCount }}</span>
-		<a href="{{ ea_url().setController('App\\Controller\\Admin\\ScenarioCrudController') }}" class="btn btn-sm btn-info">Gérer les scénarios</a>
 
-		<h2>Derniers utilisateurs</h2>
+	</section>
 
-		<h5 class="mb-0">Utilisateurs récemment inscrits</h5>
-		<table class="table table-striped mb-0">
-			<thead>
-				<tr>
-					<th>Pseudo</th>
-					<th>Email</th>
-					<th>Rôles</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for user in recentUsers %}
-					<tr>
-						<td>{{ user.pseudo }}</td>
-						<td>{{ user.email }}</td>
-						<td>
-							{% for role in user.roles %}
-								<span class="badge badge-secondary">{{ role }}</span>
-							{% endfor %}
-						</td>
-						<td>
-							<a href="{{ ea_url().setController('App\\Controller\\Admin\\UserCrudController').setAction('detail').setEntityId(user.id) }}" class="btn btn-sm btn-info">
-								<i class="fa fa-eye"></i>
-							</a>
-						</td>
-					</tr>
+	<section class="card shadow-sm mb-4" aria-label="Inscriptions users récentes">
+		<div class="card-header bg-white d-flex justify-content-between align-items-center">
+			<h4 class="mb-0 text-black">
+				<i class="fa fa-user-plus me-2 text-success"></i>
+				Utilisateurs récemment inscrits
+			</h4>
+			<a href="{{ ea_url().setController('App\\Controller\\Admin\\UserCrudController') }}" class="btn btn-sm btn-outline-secondary px-4 py-2">
+				Voir tous
+			</a>
+		</div>
+		<div class="card-body p-0">
+			<div class="table-responsive">
+				<table class="table table-hover mb-0">
+					<thead class="table-light">
+						<tr>
+							<th class="ps-3">Pseudo</th> 
+							<th>Email</th>
+							<th>Rôles</th>
+							<th class="text-center">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for user in recentUsers %}
+							<tr>
+								<td class="align-middle">
+									<div class="d-flex align-items-center ms-2 text-light-emphasis fw-semibold">
+										{{ user.pseudo }}
+									</div>
+								</td>
+								<td class="align-middle">
+									<span>{{ user.email }}</span>
+								</td>
+								<td class="align-middle">
+									{% for role in user.roles %}
+										{% if role == 'ROLE_ADMIN' %}
+											<span class="badge bg-danger-subtle px-2 py-1">Admin</span>
+										{% elseif role == 'ROLE_USER' %}
+											<span class="badge bg-info-subtle px-2 py-1">Utilisateur</span>
+										{% else %}
+											<span class="badge bg-secondary px-2 py-1">{{ role }}</span>
+										{% endif %}
+									{% endfor %}
+								</td>
+								<td class="text-center align-middle">
+									<a href="{{ ea_url().setController('App\\Controller\\Admin\\UserCrudController').setAction('detail').setEntityId(user.id) }}" class="btn btn-sm btn-outline-success" title="Voir le détail">
+										<i class="fa fa-eye"></i>
+									</a>
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="4" class="text-center py-4">
+									<div class="text-muted">
+										<i class="fa fa-info-circle me-1"></i>
+										Aucun utilisateur trouvé
+									</div>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+
+	<section class="card shadow-sm mb-4">
+		<div class="card-header bg-white d-flex justify-content-between align-items-center">
+			<h4 class="mb-0 text-black">
+				<i class="fa fa-map me-4 text-danger py-4"></i>Derniers scénarios</h4>
+			<a href="{{ ea_url().setController('App\\Controller\\Admin\\ScenarioCrudController') }}" class="btn btn-sm btn-outline-secondary px-4 py-2">
+				Voir tous
+			</a>
+		</div>
+		<div class="card-body p-0">
+			<ul class="list-group list-group-flush">
+				{% for scenario in recentScenarios %}
+					<li class="list-group-item px-3 py-3 d-flex justify-content-between align-items-center">
+						<div>
+							<span class="fw-semibold fs-5">{{ scenario.title }}</span>
+							<br>
+							<small>
+								<i class="fa fa-calendar-alt me-1"></i>
+								{{ scenario.createdAt|date('d/m/Y') }}
+							</small>
+						</div>
+						<a href="{{ ea_url().setController('App\\Controller\\Admin\\ScenarioCrudController').setAction('detail').setEntityId(scenario.id) }}" class="btn btn-sm btn-outline-success" title="Voir le détail">
+							<i class="fa fa-eye"></i>
+						</a>
+					</li>
 				{% else %}
-					<tr>
-						<td colspan="4" class="text-center">Aucun utilisateur trouvé</td>
-					</tr>
+					<li class="list-group-item py-4 text-center text-muted">
+						<i class="fa fa-info-circle me-1"></i>
+						Aucun scénario trouvé
+					</li>
 				{% endfor %}
-			</tbody>
-		</table>
+			</ul>
+		</div>
+	</section>
 
-		<h2>Contenu récent</h2>
-		<h5 class="mb-0">Dernières campagnes</h5>
-		<ul class="list-group list-group-flush">
-			{% for campaign in recentCampaigns %}
-				<li class="list-group-item d-flex justify-content-between align-items-center">
-					<div>
-						<strong>{{ campaign.name }}</strong>
-						<br>
-						<small class="text-muted">Créée le
-							{{ campaign.createdAt|date('d/m/Y') }}</small>
-					</div>
-					<a href="{{ ea_url().setController('App\\Controller\\Admin\\CampaignCrudController').setAction('detail').setEntityId(campaign.id) }}" class="btn btn-sm btn-success">
-						<i class="fa fa-eye"></i>
-					</a>
-				</li>
-			{% else %}
-				<li class="list-group-item">Aucune campagne trouvée</li>
-			{% endfor %}
-		</ul>
-		<h5 class="mb-0">Derniers scénarios</h5>
-		<ul class="list-group list-group-flush">
-			{% for scenario in recentScenarios %}
-				<li class="list-group-item d-flex justify-content-between align-items-center">
-					<div>
-						<strong>{{ scenario.title }}</strong>
-						<br>
-						<small class="text-muted">Créé le
-							{{ scenario.createdAt|date('d/m/Y') }}</small>
-					</div>
-					<a href="{{ ea_url().setController('App\\Controller\\Admin\\ScenarioCrudController').setAction('detail').setEntityId(scenario.id) }}" class="btn btn-sm btn-info">
-						<i class="fa fa-eye"></i>
-					</a>
-				</li>
-			{% else %}
-				<li class="list-group-item">Aucun scénario trouvé</li>
-			{% endfor %}
-		</ul>
-	{% endblock %}
+	<section class="card shadow-sm mb-4" aria-label="Dernières campagnes ajoutées">
+		<div class="card-header bg-white d-flex justify-content-between align-items-center">
+			<h4 class="mb-0 text-black">
+				<i class="fa fa-bullhorn me-4 text-success"></i>Dernières campagnes</h4>
+			<a href="{{ ea_url().setController('App\\Controller\\Admin\\CampaignCrudController') }}" class="btn btn-sm btn-outline-secondary px-4 py-2">
+				Voir toutes
+			</a>
+		</div>
+		<div class="card-body p-0">
+			<ul class="list-group list-group-flush">
+				{% for campaign in recentCampaigns %}
+					<li class="list-group-item px-3 py-3 d-flex justify-content-between align-items-center">
+						<div>
+							<span class="fw-semibold fs-5">{{ campaign.name }}</span>
+							<br>
+							<small>
+								<i class="fa fa-calendar-alt me-1"></i>
+								{{ campaign.createdAt|date('d/m/Y') }}
+							</small>
+						</div>
+						<a href="{{ ea_url().setController('App\\Controller\\Admin\\CampaignCrudController').setAction('detail').setEntityId(campaign.id) }}" class="btn btn-sm btn-outline-success" title="Voir le détail">
+							<i class="fa fa-eye"></i>
+						</a>
+					</li>
+				{% else %}
+					<li class="list-group-item py-4 text-center text-muted">
+						<i class="fa fa-info-circle me-1"></i>
+						Aucune campagne trouvée
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</section>
+</div>
+
+{% endblock %}

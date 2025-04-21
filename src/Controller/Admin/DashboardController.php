@@ -80,8 +80,11 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('CoPath');
-        // ajouter logo
+            ->setTitle('CoPath')
+            ->setFaviconPath('favicon.png')
+            ->setDefaultColorScheme('dark')
+
+            ;
     }
 
     public function configureMenuItems(): iterable
@@ -89,7 +92,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-desktop');
         // mettre à jour la route pour le retour au site
         yield MenuItem::linktoRoute('Back to the website', 'fas fa-home', 'app_home');
-        // yield MenuItem::linkToLogout('Déconnexion', 'fa fa-sign-out');
+        yield MenuItem::linkToLogout('Déconnexion', 'fa fa-sign-out');
 
         yield MenuItem::section('Users');
         yield MenuItem::linkToCrud('Users', 'fas fa-list', User::class);

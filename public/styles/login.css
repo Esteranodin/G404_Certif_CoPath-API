@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #1d2e3f;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.login-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-header {
+  background-color: #5b8ec0;
+  padding: 15px 20px;
+  text-align: center;
+}
+
+.login-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.login-body {
+  padding: 20px;
+}
+
+.login-footer {
+  background-color: #f1f5f9;
+  padding: 12px 20px;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #1d2e3f;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* Formulaire */
+.form-group {
+  margin-bottom: 18px;
+  color: #1d2e3f;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #334155;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #727981;
+  border-radius: 6px;
+  font-size: 0.9375rem;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #2b64a1;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+/* Bouton */
+.btn {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #5b8ec0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.btn:hover {
+  background-color: #2d445c;
+  color: white;
+  font-weight: 500;
+}
+
+/* Alerte d'erreur */
+.alert {
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: 6px;
+  background-color: #fef2f2;
+  border-left: 4px solid #ef4444;
+  color: #b91c1c;
+}
+
+.alert p {
+  margin: 0 0 4px 0;
+}
+
+.alert p:first-child {
+  font-weight: 500;
+}
