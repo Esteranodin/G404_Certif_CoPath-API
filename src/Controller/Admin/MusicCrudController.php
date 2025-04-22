@@ -3,13 +3,11 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Music;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 
-class MusicCrudController extends AbstractCrudController
+class MusicCrudController extends AbstractCustomCrudController
 {
     public static function getEntityFqcn(): string
     {
@@ -20,9 +18,10 @@ class MusicCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('musicPath'),     
-            ArrayField::new('scenario')->onlyOnIndex(),
-            AssociationField::new('scenario')->onlyOnForms(),
+            UrlField::new('musicPath')
+                ->setLabel('Chemin de la musique'),
+            AssociationField::new('scenario')
+                ->setCrudController(ScenarioCrudController::class),
         ];
     }
 }

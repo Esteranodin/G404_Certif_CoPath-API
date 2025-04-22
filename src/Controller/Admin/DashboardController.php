@@ -61,7 +61,7 @@ class DashboardController extends AbstractDashboardController
         $scenarioCount = $this->entityManager->getRepository(Scenario::class)->count([]);
 
         $recentUsers = $this->entityManager->getRepository(User::class)
-            ->findBy([], ['id' => 'DESC'], 5);
+            ->findBy(['isBan' => 1], ['id' => 'DESC'], 5);
         $recentCampaigns = $this->entityManager->getRepository(Campaign::class)
             ->findBy([], ['createdAt' => 'DESC'], 5);
         $recentScenarios = $this->entityManager->getRepository(Scenario::class)

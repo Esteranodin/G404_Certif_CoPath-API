@@ -5,17 +5,14 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Service\PasswordHashService;
 use Doctrine\ORM\EntityManagerInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class UserCrudController extends AbstractCrudController
+class UserCrudController extends AbstractCustomCrudController
 {
     private PasswordHashService $passwordHashService;
 
@@ -36,50 +33,20 @@ class UserCrudController extends AbstractCrudController
             EmailField::new('email'),
             TextField::new('pseudo'),
             TextField::new('plainPassword')
-                ->setLabel('Password')
+                ->setLabel('Mot de passe')
                 ->onlyOnForms()
                 ->setRequired($pageName === Crud::PAGE_NEW),
             ChoiceField::new('roles')
+                ->setLabel('Rôles')
                 ->setChoices([
                     'Utilisateur' => 'ROLE_USER',
                     'Administrateur' => 'ROLE_ADMIN'
                 ])
                 ->allowMultipleChoices()
                 ->setFormTypeOption('multiple', true)
-                ->setFormTypeOption('mapped', true)
-                ->onlyOnForms(),
+                ->setFormTypeOption('mapped', true),
             BooleanField::new('isBan'),
         ];
-    }
-
-    public function configureCrud(Crud $crud): Crud
-    {
-        return $crud
-            ->setEntityLabelInSingular('Utilisateur')
-            ->setEntityLabelInPlural('Utilisateurs')
-            ->setSearchFields(['email', 'pseudo'])
-            ->setPageTitle('edit', 'Modifier un utilisateur')
-            ->setPageTitle('new', 'Créer un utilisateur');
-    }
-
-    public function configureActions(Actions $actions): Actions
-    {
-        return $actions
-            ->add(Crud::PAGE_INDEX, Action::DETAIL)
-            // Les traductions sont maintenant gérées par les fichiers de traduction!
-            // Tu n'as besoin de conserver que les redirections spécifiques
-            ->update(Crud::PAGE_EDIT, Action::SAVE_AND_RETURN, function (Action $action) {
-                return $action->linkToRoute('admin', [
-                    'crudControllerFqcn' => self::class,
-                    'crudAction' => 'index',
-                ]);
-            })
-            ->update(Crud::PAGE_NEW, Action::SAVE_AND_RETURN, function (Action $action) {
-                return $action->linkToRoute('admin', [
-                    'crudControllerFqcn' => self::class,
-                    'crudAction' => 'index',
-                ]);
-            });
     }
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
@@ -93,6 +60,7 @@ class UserCrudController extends AbstractCrudController
 
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
+
         if ($entityInstance instanceof User) {
             // Gestion du mot de passe
             $this->passwordHashService->hashUserPassword($entityInstance);
@@ -113,6 +81,7 @@ class UserCrudController extends AbstractCrudController
                 $entityInstance->setRoles($cleanRoles);
             }
         }
+
         parent::updateEntity($entityManager, $entityInstance);
     }
 }
