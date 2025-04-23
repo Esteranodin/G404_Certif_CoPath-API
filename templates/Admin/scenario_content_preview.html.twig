@@ -1,0 +1,89 @@
+{% if field.value %}
+    {% set content = field.value|striptags %}
+    {% set uniqueId = 'scenario-preview-' ~ field.uniqueId %}
+
+    {# PAGE INDEX #}
+    {% if app.request.get('crudAction') == 'index' %}
+        <div class="d-flex align-items-end gap-3">
+            <button type="button" class="btn btn-sm btn-outline-secondary preview-btn" data-bs-toggle="modal" data-bs-target="#{{ uniqueId }}">
+                <i class="fas fa-file-alt me-1"></i>
+                Aperçu
+            </button>
+
+            {% set length = content|length %}
+            {% if length < 50 %}
+                <span class="badge bg-danger fw-bold">
+                    {{ length }}
+                    caractères
+                </span>
+            {% elseif length < 200 %}
+                <span class="badge bg-warning fw-bold text-dark">
+                    {{ length }}
+                    caractères
+                </span>
+            {% else %}
+                <span class="badge bg-success fw-bold">
+                    {{ length }}
+                    caractères
+                </span>
+            {% endif %}
+        </div>
+
+        <!-- MODAL APERCU -->
+        <div class="modal fade" id="{{ uniqueId }}" tabindex="-1" aria-labelledby="{{ uniqueId }}-label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="{{ uniqueId }}-label">Aperçu du scénario</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content-preview p-3 text-dark bg-light rounded">
+                            {{ content|slice(0, 250) }}
+                            {% if (content|length) > 250 %}
+                                <span class="text-muted">...</span>
+                                <div class="mt-3 text-center">
+                                    <a href="#" class="find-scenario-link text-success fw-bolder" data-field-id="{{ uniqueId }}">Lire la suite</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const link = document.querySelector('.find-scenario-link[data-field-id="{{ uniqueId }}"]');
+                if (link) {
+                    link.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        // Empêche le comportement par défaut du lien
+                        // Trouver le bouton "Voir plus" dans la même ligne du tableau
+                        const row = document.querySelector('#{{ uniqueId }}').closest('tr');
+                        if (row) {
+                            const viewButton = row.querySelector('a.action-detail');
+                            if (viewButton) {
+                                // Fermer la modal puis rediriger
+                                const modal = bootstrap.Modal.getInstance(document.querySelector('#{{ uniqueId }}'));
+                                modal.hide();
+                                setTimeout(function () {
+                                    window.location.href = viewButton.href;
+                                }, 150);
+                            }
+                        }
+                    });
+                }
+            });
+        </script>
+
+    {# PAGE DETAILS #}
+    {% else %}
+        <div class="content-full">{{ field.value|raw }}</div>
+    {% endif %}
+{% else %}
+    <span class="text-muted fst-italic">Aucun contenu</span>
+{% endif %}

@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Campaign;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class CampaignCrudController extends AbstractCustomCrudController
 {
@@ -19,11 +20,21 @@ class CampaignCrudController extends AbstractCustomCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('name')
-                ->setLabel('Nom de la campagne')
-                ->setRequired(true),
+                ->setLabel('Nom de la campagne'),
             TextField::new('theme')
                 ->setLabel('Thème'),
-            ...$this->createTimestampFields(),
+            AssociationField::new('scenarios')
+                ->setLabel('Scénarios')
+                ->setTemplatePath('admin/field_clickable.html.twig')
+                ->setCrudController(ScenarioCrudController::class) 
+                ->onlyOnDetail(),
+                
+            // Lors création Campagne, est-ce qu'on peut ajouter des scénarios ?
+            // AssociationField::new('scenarios')
+            //     ->setLabel('Scénarios')
+            //     ->setCrudController(ScenarioCrudController::class)
+            //     ->onlyOnForms(),
+            // ...$this->createTimestampFields(),
         ];
     }
 

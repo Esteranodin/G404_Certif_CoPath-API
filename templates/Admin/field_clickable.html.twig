@@ -1,0 +1,33 @@
+{% if field.value %}
+	{% set items = field.value %}
+
+	{% if field.property == 'campaign' %}
+		{% set target_controller = 'App\\Controller\\Admin\\CampaignCrudController' %}
+		{% for item in items %}
+			<a href="{{ ea_url() .setController(target_controller) .setAction('detail') .setEntityId(item.id) }}" class="badge bg-info text-dark me-1 p-2">
+				<i class="fas fa-book me-1"></i>
+				{{ item }}
+			</a>
+		{% endfor %}
+	{% elseif field.property == 'scenarios' %}
+		{% set target_controller = 'App\\Controller\\Admin\\ScenarioCrudController' %}
+
+		<div class="row">
+			<div class="col-12 col-md-8 col-lg-6">
+				{% for item in items %}
+					<div class="list-group py-2 w-100 w-md-75 w-lg-50">
+						<a href="{{ ea_url() .setController(target_controller) .setAction('detail') .setEntityId(item.id) }}" class="list-group-item list-group-item-action list-group-item-success">
+							<span class="fw-semibold pe-3">{{ item.title }}</span>
+							<i class="fas fa-eye me-1"></i>
+						</a>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	{% endif %}
+{% else %}
+	<div class="alert alert-light border">
+		<i class="fas fa-info-circle me-1"></i>
+		<span class="text-muted">Aucun élément associé</span>
+	</div>
+{% endif %}

@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\Entity\Scenario;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class ScenarioCrudController extends AbstractCustomCrudController
@@ -21,22 +20,18 @@ class ScenarioCrudController extends AbstractCustomCrudController
             IdField::new('id')->hideOnForm(),
             TextField::new('title')
                 ->setLabel('Titre'),
-            TextareaField::new('content')
-                ->setLabel('Description')
-                ->setFormTypeOption('attr', ['rows' => 10])
-                ->formatValue(function ($value) {
-                    if (strlen($value) > 50) {
-                        return substr($value, 0, 50) . '...';
-                    }
-                    return $value;
-                }),
+            TextField::new('content', 'Contenu')
+                ->setTemplatePath('admin/scenario_content_preview.html.twig')
+                ->hideOnForm(),
             AssociationField::new('campaign')
+                ->setLabel('Campagnes')
+                ->setTemplatePath('admin/field_clickable.html.twig')
                 ->setCrudController(CampaignCrudController::class)
-                ->setLabel('Campagne')
-                ->setFormTypeOption('choice_label', 'name'),
-                // ->formatValue(function ($value) {
-                //     return $value ? $value->getName() : '';
-                // }),
+                ->hideOnForm(),
+            // Version éditable pour les formulaires
+            AssociationField::new('campaign')
+                ->setLabel('Campagnes')
+                ->onlyOnForms(),
             ...$this->createTimestampFields(),
         ];
     }

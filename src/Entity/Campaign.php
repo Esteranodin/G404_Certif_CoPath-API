@@ -96,7 +96,7 @@ class Campaign implements HasCreatedAtInterface, HasUpdatedAtInterface, HasUserI
         return $this->id;
     }
 
-    public function c(): ?string
+    public function getName(): ?string
     {
         return $this->name;
     }

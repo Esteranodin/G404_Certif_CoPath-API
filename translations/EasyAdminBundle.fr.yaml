@@ -62,5 +62,41 @@ paginator.results: '%count% résultats'
 paginator.results.count: '{0} Aucun résultat|{1} <strong>1</strong> résultat|]1,Inf] <strong>%count%</strong> résultats'
 
 # Messages de succès
-flash.entity.saved: 'L''élément a été enregistré avec succès'
-flash.entity.deleted: 'L''élément a été supprimé avec succès'
+flash.entity.saved: "L'élément a été enregistré avec succès"
+flash.entity.deleted: "L'élément a été supprimé avec succès"
+
+# Titres génériques des pages
+admin:
+  page:
+    index: 'Liste des %entity_plural%'
+    new: 'Créer %article% %entity_name%'
+    edit: 'Modifier %article_def% %entity_name%'
+    detail: 'Détails %article_def% %entity_name%'
+
+  # Masculin
+  user:
+    name: 'utilisateur'
+    plural: 'utilisateurs'
+    article: 'un'
+    article_def: "de l'"
+  scenario:
+    name: 'scénario'
+    plural: 'scénarios'
+    article: 'un'
+    article_def: 'du'
+  # Féminin
+  campaign:
+    name: 'campagne'
+    plural: 'campagnes'
+    article: 'une'
+    article_def: 'de la'
+  music:
+    name: 'musique'
+    plural: 'musiques'
+    article: 'une'
+    article_def: 'de la'
+  img_scenario:
+    name: 'image'
+    plural: 'images'
+    article: 'une'
+    article_def: "de l'"

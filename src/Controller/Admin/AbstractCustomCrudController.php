@@ -31,6 +31,16 @@ abstract class AbstractCustomCrudController extends AbstractCrudController
         
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            ->update(Crud::PAGE_INDEX, Action::DETAIL, function (Action $action) {
+                return $action->setLabel('Voir plus')
+                    ->setIcon('fa fa-eye');
+                })
+            ->update(Crud::PAGE_INDEX, Action::DELETE, function (Action $action) {
+                return $action->setIcon('fa fa-trash');
+                })
+            ->update(Crud::PAGE_INDEX, Action::EDIT, function (Action $action) {
+                return $action->setIcon('fa fa-edit');
+                })
             ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE)
             ->remove(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER)
             ->add(Crud::PAGE_EDIT, $backToList)
@@ -52,7 +62,7 @@ abstract class AbstractCustomCrudController extends AbstractCrudController
             ->setTimeFormat('HH:mm')
             ->setDateTimeFormat('dd/MM/yyyy HH:mm')
             ->setPageTitle('index', $this->getPluralLabel($entityName))
-            ->setPageTitle('new', 'Créer un ' . $this->getSingularLabel($entityName))
+            ->setPageTitle('new', 'Créer un(e) ' . $this->getSingularLabel($entityName))
             ->setPageTitle('edit', 'Modifier le ' . $this->getSingularLabel($entityName))
             ->setPageTitle('detail', 'Détails du ' . $this->getSingularLabel($entityName));
     }
