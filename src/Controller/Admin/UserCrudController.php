@@ -29,7 +29,7 @@ class UserCrudController extends AbstractCustomCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideOnForm(),
+            // IdField::new('id')->hideOnForm(),
             EmailField::new('email'),
             TextField::new('pseudo'),
             TextField::new('plainPassword')
@@ -45,7 +45,8 @@ class UserCrudController extends AbstractCustomCrudController
                 ->allowMultipleChoices()
                 ->setFormTypeOption('multiple', true)
                 ->setFormTypeOption('mapped', true),
-            BooleanField::new('isBan'),
+            BooleanField::new('isBan')
+                ->setLabel('Banni')
         ];
     }
 

@@ -17,7 +17,7 @@ class ScenarioCrudController extends AbstractCustomCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideOnForm(),
+            // IdField::new('id')->hideOnForm(),
             TextField::new('title')
                 ->setLabel('Titre'),
             TextField::new('content', 'Contenu')
@@ -28,11 +28,14 @@ class ScenarioCrudController extends AbstractCustomCrudController
                 ->setTemplatePath('admin/field_clickable.html.twig')
                 ->setCrudController(CampaignCrudController::class)
                 ->hideOnForm(),
-            // Version éditable pour les formulaires
             AssociationField::new('campaign')
                 ->setLabel('Campagnes')
                 ->onlyOnForms(),
             ...$this->createTimestampFields(),
+            AssociationField::new('user')
+                ->setLabel('Créer par')
+                ->setCrudController(UserCrudController::class)
+                ->hideOnIndex(),
         ];
     }
 }

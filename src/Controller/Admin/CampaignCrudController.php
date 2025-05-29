@@ -18,11 +18,14 @@ class CampaignCrudController extends AbstractCustomCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideOnForm(),
+            // IdField::new('id')->hideOnForm(),
             TextField::new('name')
                 ->setLabel('Nom de la campagne'),
             TextField::new('theme')
                 ->setLabel('Thème'),
+            AssociationField::new('user')
+                ->setLabel('Créer par')
+                ->setCrudController(UserCrudController::class),   
             AssociationField::new('scenarios')
                 ->setLabel('Scénarios')
                 ->setTemplatePath('admin/field_clickable.html.twig')

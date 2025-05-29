@@ -1,6 +1,6 @@
 api_platform:
     title: CoPath API
-    description: API for BookMarket application
+    description: API for CoPath application
     version: 1.0.0
     swagger:
         api_keys:

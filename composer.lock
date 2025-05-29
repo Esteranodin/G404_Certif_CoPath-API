@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b3262a24184fa4cde863c0e250dcdff9",
+    "content-hash": "3d9011bd71a21e6348f93f0f03c262df",
     "packages": [
         {
             "name": "api-platform/doctrine-common",
@@ -2418,16 +2418,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v4.24.4",
+            "version": "v4.24.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "fd1b0e555655a5d8df67a0a48a28e07a1dd0d6f8"
+                "reference": "b61cd46c454d853438ded3ca21eac1ad537589aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/fd1b0e555655a5d8df67a0a48a28e07a1dd0d6f8",
-                "reference": "fd1b0e555655a5d8df67a0a48a28e07a1dd0d6f8",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/b61cd46c454d853438ded3ca21eac1ad537589aa",
+                "reference": "b61cd46c454d853438ded3ca21eac1ad537589aa",
                 "shasum": ""
             },
             "require": {
@@ -2463,11 +2463,11 @@
             },
             "require-dev": {
                 "doctrine/doctrine-fixtures-bundle": "^3.4|3.5.x-dev",
-                "phpstan/extension-installer": "^1.2",
-                "phpstan/phpstan": "^1.9",
-                "phpstan/phpstan-phpunit": "^1.2",
-                "phpstan/phpstan-strict-rules": "^1.4",
-                "phpstan/phpstan-symfony": "^1.2",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpstan/phpstan-strict-rules": "^2.0",
+                "phpstan/phpstan-symfony": "^2.0",
                 "psr/log": "^1.0",
                 "symfony/browser-kit": "^5.4|^6.0|^7.0",
                 "symfony/css-selector": "^5.4|^6.0|^7.0",
@@ -2508,7 +2508,7 @@
             ],
             "support": {
                 "issues": "https://github.com/EasyCorp/EasyAdminBundle/issues",
-                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.24.4"
+                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.24.7"
             },
             "funding": [
                 {
@@ -2516,7 +2516,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-19T19:52:22+00:00"
+            "time": "2025-05-14T17:55:05+00:00"
         },
         {
             "name": "lcobucci/clock",

@@ -85,7 +85,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var bool|null Indicates if the user is banned
      */
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(nullable: true, options: ['default' => false])]
     private ?bool $isBan = null;
 
     /**
@@ -111,6 +111,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->campaigns = new ArrayCollection();
         $this->scenarios = new ArrayCollection();
+    }
+    
+    public function __toString(): string
+    {
+        return $this->getPseudo() ?? 'Utilisateur';
     }
 
     public function getId(): ?int

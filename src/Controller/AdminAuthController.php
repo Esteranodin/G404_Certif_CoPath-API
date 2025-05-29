@@ -26,6 +26,5 @@ class AdminAuthController extends AbstractController
     public function logout(): void
     {
         // Cette méthode sera interceptée par le système de sécurité
-        // Vous n'avez pas besoin d'implémenter de logique ici
     }
 }

@@ -1,7 +1,7 @@
 SUPPRIMER etat nullable de ce qui ne le sera pas
 
 
-* penser a gérer le ban avec booléan
+
 
 ** faire role et connection pour dashboard
 + finir dashboard not. tout mettre en français ou anglais && uniformiser (cf. les set des actions dans USER crud)
@@ -21,6 +21,8 @@ image via form-data et pas un json (dans postman voir form-data a la place de ra
 et coté front = objet formdata
 
 update image pas patch mais post ==> donc 2 routes post (1 création et une pour update) car formdata
+
+UPLOADS dans .gitignore + gérer l'upload
 
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------

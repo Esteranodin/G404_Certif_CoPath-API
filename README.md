@@ -40,12 +40,10 @@
 Si la commande ne fonctionne pas, créez le dossier config/jwt à la main et ouvrez un terminal Git Bash :
 ```bash
     openssl genrsa -out config/jwt/private.pem -aes256 4096
+    openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem
 ```
 (mettre à jour le `.env.local` // passphrase )
 
-```bash
-    openssl genrsa -out config/jwt/private.pem -aes256 4096
-```
 
 ## Lancer le serveur
 ```bash
