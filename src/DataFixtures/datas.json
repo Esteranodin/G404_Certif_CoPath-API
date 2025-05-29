@@ -1,0 +1,132 @@
+{
+  "campaigns": [
+    {
+      "name": "Quête du Griffon",
+      "theme": "Fantasy"
+    },
+    {
+      "name": "Mission Alpha",
+      "theme": "Science Fiction"
+    },
+    {
+      "name": "L'Affaire du Diamant Bleu",
+      "theme": "Sherlock"
+    },
+    {
+      "name": "Nuit Sanglante",
+      "theme": "Horreur"
+    },
+    {
+      "name": "Le Disque en Folie",
+      "theme": "Pratchett"
+    }
+  ],
+  
+  "scenarios": [
+    {
+      "title": "La malédiction du temple perdu",
+      "content": "Les héros doivent explorer un ancien temple rempli de pièges pour lever une malédiction ancestrale.",
+      "image_path": "/uploads/scenarios-covers/scenario1.jpg",
+      "image_alt": "Temple perdu",
+      "campaign": "Fantasy"
+    },
+    {
+      "title": "Le secret de la forêt noire",
+      "content": "Une force mystérieuse trouble la forêt noire. Les aventuriers devront enquêter sur d'étranges disparitions.",
+      "image_path": "/uploads/scenarios-covers/scenario2.jpg",
+      "image_alt": "Forêt noire",
+      "campaign": "Fantasy"
+    },
+    {
+      "title": "L'héritage du dragon",
+      "content": "Un dragon légendaire aurait laissé un héritage caché, protégé par de puissants gardiens.",
+      "image_path": "/uploads/scenarios-covers/scenario3.jpg",
+      "image_alt": "Dragon endormi",
+      "campaign": "Fantasy"
+    },
+    {
+      "title": "L'appel des étoiles",
+      "content": "L'équipage reçoit un signal mystérieux provenant d'une planète inconnue. Exploration et dangers les attendent.",
+      "image_path": "/uploads/scenarios-covers/scenario4.jpg",
+      "image_alt": "Planète inconnue",
+      "campaign": "Science Fiction"
+    },
+    {
+      "title": "Le vaisseau fantôme",
+      "content": "Un vaisseau abandonné dérive dans l'espace. Que cache-t-il dans ses cales obscures ?",
+      "image_path": "/uploads/scenarios-covers/scenario5.jpg",
+      "image_alt": "Vaisseau fantôme",
+      "campaign": "Science Fiction"
+    },
+    {
+      "title": "La cité engloutie de Neptune",
+      "content": "Les joueurs doivent explorer une cité sous-marine antique sur Neptune, pleine de secrets et de dangers.",
+      "image_path": "/uploads/scenarios-covers/scenario6.jpg",
+      "image_alt": "Cité sous-marine",
+      "campaign": "Science Fiction"
+    },
+    {
+      "title": "Meurtre à Baker Street",
+      "content": "Un crime a été commis près de Baker Street. Les enquêteurs doivent démêler un réseau de mensonges.",
+      "image_path": "/uploads/scenarios-covers/scenario7.jpg",
+      "image_alt": "Baker Street",
+      "campaign": "Sherlock"
+    },
+    {
+      "title": "Le secret du manoir Blackwood",
+      "content": "Un héritier a disparu dans un vieux manoir. Les joueurs doivent résoudre l'énigme avant minuit.",
+      "image_path": "/uploads/scenarios-covers/scenario8.jpg",
+      "image_alt": "Manoir mystérieux",
+      "campaign": "Sherlock"
+    },
+    {
+      "title": "L'ombre du professeur Moriarty",
+      "content": "Moriarty prépare un nouveau coup. Les détectives doivent l'arrêter avant qu'il ne frappe Londres.",
+      "image_path": "/uploads/scenarios-covers/scenario9.jpg",
+      "image_alt": "Ombre de Moriarty",
+      "campaign": "Sherlock"
+    },
+    {
+      "title": "La nuit des hurlements",
+      "content": "Un village isolé est la proie de créatures nocturnes. Survivrez-vous jusqu'à l'aube ?",
+      "image_path": "/uploads/scenarios-covers/scenario10.jpg",
+      "image_alt": "Village la nuit",
+      "campaign": "Horreur"
+    },
+    {
+      "title": "Le bal des vampires",
+      "content": "Un bal masqué chez les vampires, où chaque invité cache un secret mortel.",
+      "image_path": "/uploads/scenarios-covers/scenario11.jpg",
+      "image_alt": "Bal des vampires",
+      "campaign": "Horreur"
+    },
+    {
+      "title": "L'appel du néant",
+      "content": "Une entité venue d'ailleurs tente d'envahir le monde. Les joueurs doivent refermer la brèche.",
+      "image_path": "/uploads/scenarios-covers/scenario12.jpg",
+      "image_alt": "Brèche dimensionnelle",
+      "campaign": "Horreur"
+    },
+    {
+      "title": "Le guet veille",
+      "content": "Dans la ville d'Ankh-Morpork, le Guet enquête sur une série de vols absurdes.",
+      "image_path": "/uploads/scenarios-covers/scenario13.jpg",
+      "image_alt": "Ankh-Morpork",
+      "campaign": "Pratchett"
+    },
+    {
+      "title": "La magie du Disque",
+      "content": "Un sort incontrôlable menace de transformer la ville en grenouilles. À vous de sauver le Disque-Monde !",
+      "image_path": "/uploads/scenarios-covers/scenario14.jpg",
+      "image_alt": "Disque-Monde",
+      "campaign": "Pratchett"
+    },
+    {
+      "title": "Le complot des ombres",
+      "content": "Un complot menace le royaume, les joueurs devront infiltrer la cour pour découvrir la vérité.",
+      "image_path": "/uploads/scenarios-covers/scenario15.jpg",
+      "image_alt": "Complot à la cour",
+      "campaign": null
+    }
+  ]
+}

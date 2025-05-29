@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class UserCrudController extends AbstractCustomCrudController
@@ -46,7 +47,11 @@ class UserCrudController extends AbstractCustomCrudController
                 ->setFormTypeOption('multiple', true)
                 ->setFormTypeOption('mapped', true),
             BooleanField::new('isBan')
-                ->setLabel('Banni')
+                ->setLabel('Banni'),
+            ImageField::new('avatar')
+                ->onlyOnDetail()
+                ->setBasePath('/')
+                ->setLabel('Avatar'),
         ];
     }
 

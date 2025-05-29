@@ -86,7 +86,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var bool|null Indicates if the user is banned
      */
     #[ORM\Column(nullable: true, options: ['default' => false])]
-    private ?bool $isBan = null;
+    private ?bool $isBan = false;
 
     /**
      * @var Collection<int, Scenario>
@@ -103,7 +103,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The picture avatar of the user
      */
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type:'string', length: 255, nullable: true)]
     private ?string $avatar = null;
 
 

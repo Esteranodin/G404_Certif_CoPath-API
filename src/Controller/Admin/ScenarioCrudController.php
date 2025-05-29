@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Scenario;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class ScenarioCrudController extends AbstractCustomCrudController
@@ -36,6 +37,10 @@ class ScenarioCrudController extends AbstractCustomCrudController
                 ->setLabel('Créer par')
                 ->setCrudController(UserCrudController::class)
                 ->hideOnIndex(),
+            ImageField::new('imgScenario.imgPath')
+                ->setBasePath('/uploads/scenarios-covers/')
+                ->setLabel('Aperçu image')
+                ->onlyOnDetail(),
         ];
     }
 }

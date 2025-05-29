@@ -22,7 +22,7 @@ class ImgScenarioCrudController extends AbstractCustomCrudController
             ImageField::new('imgPath')
             ->setLabel('Chemin de l\'image')
             ->setBasePath('uploads/images')
-            ->setUploadDir('public/uploads/scenariosCovers')
+            ->setUploadDir('public/uploads/scenarios-covers')
             ->setUploadedFileNamePattern('[randomhash].[extension]'),
             TextField::new('imgAlt')
                 ->setLabel('Texte alternatif'),
