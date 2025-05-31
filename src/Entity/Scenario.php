@@ -94,6 +94,7 @@ class Scenario implements HasCreatedAtInterface, HasUpdatedAtInterface, HasUserI
      * @var Collection<int, ImgScenario>
      */
     #[ORM\OneToMany(targetEntity: ImgScenario::class, mappedBy: 'scenario')]
+    #[Groups(['scenario:read', 'scenario:write'])]
     private Collection $img;
 
 

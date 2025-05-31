@@ -61,7 +61,6 @@ class ImgScenario
     private ?string $imgAlt = null;
 
     #[ORM\ManyToOne(inversedBy: 'img')]
-    #[Groups(['scenario:read'])]
     private ?Scenario $scenario = null;
 
     public function getId(): ?int
