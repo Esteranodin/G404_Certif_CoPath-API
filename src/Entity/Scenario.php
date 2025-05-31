@@ -97,12 +97,26 @@ class Scenario implements HasCreatedAtInterface, HasUpdatedAtInterface, HasUserI
     #[Groups(['scenario:read', 'scenario:write'])]
     private Collection $img;
 
+    /**
+     * @var Collection<int, Rating>
+     */
+    #[ORM\OneToMany(targetEntity: Rating::class, mappedBy: 'scenario')]
+    private Collection $ratings;
+
+    /**
+     * @var Collection<int, Favorite>
+     */
+    #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy: 'scenario')]
+    private Collection $favorites;
+
 
     public function __construct()
     {
         $this->campaign = new ArrayCollection();
         $this->music = new ArrayCollection();
         $this->img = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
+        $this->favorites = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -255,6 +269,66 @@ class Scenario implements HasCreatedAtInterface, HasUpdatedAtInterface, HasUserI
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Rating>
+     */
+    public function getRatings(): Collection
+    {
+        return $this->ratings;
+    }
+
+    public function addRating(Rating $rating): static
+    {
+        if (!$this->ratings->contains($rating)) {
+            $this->ratings->add($rating);
+            $rating->setScenario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRating(Rating $rating): static
+    {
+        if ($this->ratings->removeElement($rating)) {
+            // set the owning side to null (unless already changed)
+            if ($rating->getScenario() === $this) {
+                $rating->setScenario(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Favorite>
+     */
+    public function getFavorites(): Collection
+    {
+        return $this->favorites;
+    }
+
+    public function addFavorite(Favorite $favorite): static
+    {
+        if (!$this->favorites->contains($favorite)) {
+            $this->favorites->add($favorite);
+            $favorite->setScenario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavorite(Favorite $favorite): static
+    {
+        if ($this->favorites->removeElement($favorite)) {
+            // set the owning side to null (unless already changed)
+            if ($favorite->getScenario() === $this) {
+                $favorite->setScenario(null);
+            }
+        }
 
         return $this;
     }
