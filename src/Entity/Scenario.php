@@ -8,13 +8,10 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-
 use App\DataPersister\ScenarioDataPersister;
+use App\Entity\Traits\BlamableTrait;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\ScenarioRepository;
-use App\Entity\Interfaces\HasCreatedAtInterface;
-use App\Entity\Interfaces\HasUpdatedAtInterface;
-use App\Entity\Interfaces\HasUserInterface;
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -50,8 +47,11 @@ use Symfony\Component\Serializer\Attribute\Groups;
     ]
 )]
 
-class Scenario implements HasCreatedAtInterface, HasUpdatedAtInterface, HasUserInterface
+class Scenario
 {
+    use TimestampableTrait;
+    use BlamableTrait;
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -119,6 +119,33 @@ class Scenario implements HasCreatedAtInterface, HasUpdatedAtInterface, HasUserI
         $this->favorites = new ArrayCollection();
     }
 
+     #[Groups(['scenario:read'])]
+    public function getAverageRating(): float
+    {
+        if ($this->ratings->isEmpty()) {
+            return 0;
+        }
+        
+        $total = 0;
+        foreach ($this->ratings as $rating) {
+            $total += $rating->getScore();
+        }
+        
+        return round($total / $this->ratings->count(), 1);
+    }
+    
+    #[Groups(['scenario:read'])]
+    public function getRatingsCount(): int
+    {
+        return $this->ratings->count();
+    }
+    
+    #[Groups(['scenario:read'])]
+    public function getFavoritesCount(): int
+    {
+        return $this->favorites->count();
+    }
+
     public function __toString(): string
     {
         return $this->title;
@@ -137,30 +164,6 @@ class Scenario implements HasCreatedAtInterface, HasUpdatedAtInterface, HasUserI
     public function setTitle(string $title): static
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(?\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -257,18 +260,6 @@ class Scenario implements HasCreatedAtInterface, HasUpdatedAtInterface, HasUserI
                 $img->setScenario(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
 
         return $this;
     }

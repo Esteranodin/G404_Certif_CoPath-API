@@ -9,6 +9,8 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\DataPersister\ScenarioDataPersister;
+use App\Entity\Traits\BlamableTrait;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\MusicRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -43,6 +45,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
 )]
 class Music
 {
+    use TimestampableTrait;
+    use BlamableTrait;
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

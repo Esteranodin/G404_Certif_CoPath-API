@@ -9,9 +9,8 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\DataPersister\ScenarioDataPersister;
-use App\Entity\Interfaces\HasCreatedAtInterface;
-use App\Entity\Interfaces\HasUpdatedAtInterface;
-use App\Entity\Interfaces\HasUserInterface;
+use App\Entity\Traits\BlamableTrait;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\ImgScenarioRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -44,8 +43,11 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ),
     ]
 )]
-class ImgScenario  
+class ImgScenario
 {
+    use TimestampableTrait;
+    use BlamableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

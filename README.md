@@ -1,56 +1,68 @@
-# Projet : 
+# Projet :
 
-
-# Instructions non exhaustives : 
+# Instructions non exhaustives :
 
 ## Installer les dépendances & bundles nécessaires
 
 ```bash
     composer install
 ```
+
 (Décommenter extension=sodium dans fichier serveur/bin/php/versionVoulue/php.ini // redémarrer server et éditeur de code)
 
-## Dupliquer le fichier `.env` et le renommer `.env.local` 
+## Dupliquer le fichier `.env` et le renommer `.env.local`
 
-* Mettre vos informations de **connexion** à la base de donnée
+- Mettre vos informations de **connexion** à la base de donnée
 
-    Créer la BDD :
+  Créer la BDD :
 
- ```bash
-    php bin\console d:d:c
+```bash
+   php bin\console d:d:c
 ```
 
-* Si il y en a, executez les **migrations** :
+- Si il y en a, executez les **migrations** :
 
- ```bash
-    php bin\console d:m:m
+```bash
+   php bin\console d:m:m
 ```
+
+- Si il y en a, executez les **fixtures** :
+
+```bash
+    php bin/console doctrine:fixtures:load
+```
+
 ## Générer les clefs privé & publique JWT
 
-* Installation du bundle Composer
+- Installation du bundle Composer
+
 ```bash
     composer require lexik/jwt-authentication-bundle
 ```
 
-* Clefs  
+- Clefs
+
 ```bash
     symfony console lexik:jwt:generate-keypair
 ```
-    
+
 Si la commande ne fonctionne pas, créez le dossier config/jwt à la main et ouvrez un terminal Git Bash :
+
 ```bash
     openssl genrsa -out config/jwt/private.pem -aes256 4096
     openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem
 ```
+
 (mettre à jour le `.env.local` // passphrase )
 
-
 ## Lancer le serveur
+
 ```bash
     symfony server:start
 ```
 
 ## Couper le serveur
+
 ```bash
     symfony server:stop
 ```

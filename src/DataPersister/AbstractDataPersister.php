@@ -6,9 +6,6 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\State\ProcessorInterface;
-use App\Entity\Interfaces\HasCreatedAtInterface;
-use App\Entity\Interfaces\HasUpdatedAtInterface;
-use App\Entity\Interfaces\HasUserInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 
@@ -21,20 +18,21 @@ abstract class AbstractDataPersister implements ProcessorInterface
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
-        // Dates & users
-        if ($data instanceof HasUserInterface && $operation instanceof Post) {
+        // Vérifier si l'entité a la méthode setUser (BlamableTrait)
+        if (method_exists($data, 'setUser') && $operation instanceof Post) {
             $data->setUser($this->security->getUser());
         }
         
-        if ($data instanceof HasCreatedAtInterface && $operation instanceof Post) {
+        // Vérifier si l'entité a la méthode setCreatedAt (TimestampableTrait)
+        if (method_exists($data, 'setCreatedAt') && $operation instanceof Post) {
             $data->setCreatedAt(new \DateTimeImmutable());
         }
         
-        if ($data instanceof HasUpdatedAtInterface && ($operation instanceof Post || $operation instanceof Patch)) {
+        // Vérifier si l'entité a la méthode setUpdatedAt (TimestampableTrait)
+        if (method_exists($data, 'setUpdatedAt') && ($operation instanceof Post || $operation instanceof Patch)) {
             $data->setUpdatedAt(new \DateTimeImmutable());
         }
         
-        // Logique spécifique dans les classes enfants
         $this->processSpecific($data, $operation, $uriVariables, $context);
         
         $this->entityManager->persist($data);

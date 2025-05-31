@@ -2,8 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Interfaces\HasCreatedAtInterface;
-use App\Entity\Interfaces\HasUpdatedAtInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -69,11 +67,11 @@ abstract class AbstractCustomCrudController extends AbstractCrudController
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        if ($entityInstance instanceof HasCreatedAtInterface) {
+        if (method_exists($entityInstance, 'setCreatedAt')) {
             $entityInstance->setCreatedAt(new \DateTimeImmutable());
         }
         
-        if ($entityInstance instanceof HasUpdatedAtInterface) {
+        if (method_exists($entityInstance, 'setUpdatedAt')) {
             $entityInstance->setUpdatedAt(new \DateTimeImmutable());
         }
         
@@ -89,7 +87,7 @@ abstract class AbstractCustomCrudController extends AbstractCrudController
 
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        if ($entityInstance instanceof HasUpdatedAtInterface) {
+        if (method_exists($entityInstance, 'setUpdatedAt')) {
             $entityInstance->setUpdatedAt(new \DateTimeImmutable());
         }
         
@@ -120,7 +118,9 @@ abstract class AbstractCustomCrudController extends AbstractCrudController
             'Campaign' => 'Campagne',
             'Scenario' => 'Scénario',
             'Music' => 'Musique',
-            'ImgScenario' => 'Image'
+            'ImgScenario' => 'Image',
+            'Rating' => 'Note',
+            'Favorite' => 'Favori'
         ];
         
         return $mapping[$entityName] ?? strtolower($entityName);
@@ -133,7 +133,9 @@ abstract class AbstractCustomCrudController extends AbstractCrudController
             'Campaign' => 'Campagnes',
             'Scenario' => 'Scénarios',
             'Music' => 'Musiques',
-            'ImgScenario' => 'Images'
+            'ImgScenario' => 'Images',
+            'Rating' => 'Notes',
+            'Favorite' => 'Favoris'
         ];
         
         return $mapping[$entityName] ?? strtolower($entityName) . 's';

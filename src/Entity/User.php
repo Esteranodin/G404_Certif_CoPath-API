@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\DataPersister\UserDataPersister;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\UserRepository;
 use App\Provider\MeProvider;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -47,6 +48,8 @@ use Symfony\Component\Serializer\Attribute\Ignore;
 
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

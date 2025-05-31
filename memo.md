@@ -27,3 +27,4 @@ UPLOADS dans .gitignore + gérer l'upload
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
 
+J'ai viré les interfaces ; HasUserInterface; HasUpdatedAtInterface; HasCreatedAtInterface pour en faire des traits docn si jamais abstrctCrudController et abstractPersister deconne...

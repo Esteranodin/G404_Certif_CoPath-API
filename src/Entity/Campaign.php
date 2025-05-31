@@ -9,9 +9,8 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\DataPersister\CampaignDataPersister;
-use App\Entity\Interfaces\HasCreatedAtInterface;
-use App\Entity\Interfaces\HasUpdatedAtInterface;
-use App\Entity\Interfaces\HasUserInterface;
+use App\Entity\Traits\BlamableTrait;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\CampaignRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -46,8 +45,11 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ),
     ]
 )]
-class Campaign implements HasCreatedAtInterface, HasUpdatedAtInterface, HasUserInterface
+class Campaign
 {
+    use TimestampableTrait;
+    use BlamableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -143,42 +145,6 @@ class Campaign implements HasCreatedAtInterface, HasUpdatedAtInterface, HasUserI
         if ($this->scenarios->removeElement($scenario)) {
             $scenario->removeCampaign($this);
         }
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(?\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
 
         return $this;
     }
