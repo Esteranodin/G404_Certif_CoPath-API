@@ -51,7 +51,7 @@ class Scenario
 {
     use TimestampableTrait;
     use BlamableTrait;
-    
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -119,27 +119,33 @@ class Scenario
         $this->favorites = new ArrayCollection();
     }
 
-     #[Groups(['scenario:read'])]
+    #[Groups(['scenario:read'])]
     public function getAverageRating(): float
     {
-        if ($this->ratings->isEmpty()) {
+        $ratingsWithScore = $this->ratings->filter(function ($rating) {
+            return $rating->getScore() !== null;
+        });
+
+        if ($ratingsWithScore->isEmpty()) {
             return 0;
         }
-        
+
         $total = 0;
-        foreach ($this->ratings as $rating) {
+        foreach ($ratingsWithScore as $rating) {
             $total += $rating->getScore();
         }
-        
-        return round($total / $this->ratings->count(), 1);
+
+        return round($total / $ratingsWithScore->count(), 1);
     }
-    
+
     #[Groups(['scenario:read'])]
     public function getRatingsCount(): int
     {
-        return $this->ratings->count();
+        return $this->ratings->filter(function ($rating) {
+            return $rating->getScore() !== null;
+        })->count();
     }
-    
+
     #[Groups(['scenario:read'])]
     public function getFavoritesCount(): int
     {

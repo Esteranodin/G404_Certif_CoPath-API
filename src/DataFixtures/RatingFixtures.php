@@ -43,7 +43,7 @@ class RatingFixtures extends Fixture implements DependentFixtureInterface
             $existingRatings[] = $key;
 
             $rating = new Rating();
-            $rating->setScore($faker->numberBetween(1, 5)); 
+            $rating->setScore($faker->numberBetween(0, 5)); 
             
             $rating->setUser($this->getReference('user_' . $userIndex, User::class));
             $rating->setScenario($this->getReference('scenario_' . $scenarioIndex, Scenario::class));
