@@ -25,29 +25,34 @@ class FavoriteFixtures extends Fixture implements DependentFixtureInterface
         $faker = Factory::create('fr_FR');
         $scenarioCount = $manager->getRepository(Scenario::class)->count([]);
         $existingFavorites = [];
+        $created = 0;
+        $maxAttempts = 100;
+        $attempts = 0;
 
-        for ($i = 0; $i < 30; $i++) {
+        while ($created < 30 && $attempts < $maxAttempts) {
             $userIndex = $faker->numberBetween(0, 9);
             $scenarioIndex = $faker->numberBetween(0, $scenarioCount - 1);
-            
             $key = $userIndex . '_' . $scenarioIndex;
+
+            $attempts++;
+
             if (in_array($key, $existingFavorites)) {
                 continue;
             }
             $existingFavorites[] = $key;
 
             $favorite = new Favorite();
-            
-            $user = $this->getReference('user_' . $userIndex, User::class);
-            $favorite->setUser($user);
-            
-            $scenario = $this->getReference('scenario_' . $scenarioIndex, Scenario::class);
-            $favorite->setScenario($scenario);
-            
+
+            $favorite->setUser($this->getReference('user_' . $userIndex, User::class));
+            $favorite->setScenario($this->getReference('scenario_' . $scenarioIndex, Scenario::class));
+
             $favorite->setCreatedAt(new \DateTimeImmutable($faker->dateTimeBetween('-6 months', 'now')->format('Y-m-d H:i:s')));
+            $favorite->setUpdatedAt(new \DateTimeImmutable($faker->dateTimeBetween('-6 months', 'now')->format('Y-m-d H:i:s')));
 
             $manager->persist($favorite);
-            $this->addReference('favorite_' . $i, $favorite);
+            $this->addReference('favorite_' . $created, $favorite);
+
+             $created++;
         }
 
         $manager->flush();

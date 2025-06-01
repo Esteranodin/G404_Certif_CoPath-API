@@ -25,105 +25,105 @@
   "scenarios": [
     {
       "title": "La malédiction du temple perdu",
-      "content": "Les héros doivent explorer un ancien temple rempli de pièges pour lever une malédiction ancestrale.",
+      "content": "Dans les profondeurs d'une jungle hostile, un ancien temple maya émerge des brumes du temps. Les héros, guidés par un mystérieux parchemin, découvrent que ce lieu sacré est frappé d'une malédiction séculaire qui transforme quiconque y pénètre en gardien de pierre. Entre pièges mortels actionnés par d'anciens mécanismes, énigmes gravées dans une langue oubliée et spectres des prêtres d'antan, les aventuriers devront déchiffrer les rituels perdus pour briser la malédiction. Mais attention : chaque erreur révèle de nouveaux dangers, et les murs eux-mêmes semblent observer leurs moindres gestes...",
       "image_path": "/uploads/scenarios-covers/scenario1.jpg",
       "image_alt": "Temple perdu",
       "campaign": "Fantasy"
     },
     {
       "title": "Le secret de la forêt noire",
-      "content": "Une force mystérieuse trouble la forêt noire. Les aventuriers devront enquêter sur d'étranges disparitions.",
+      "content": "La forêt noire, autrefois paisible refuge des elfes sylvestres, est devenue un labyrinthe de cauchemars où disparaissent villageois et voyageurs. Une brume étrange s'élève chaque nuit, apportant avec elle des murmures dans des langues interdites et des silhouettes qui dansent entre les arbres centenaires. Les enquêteurs découvriront qu'un ancien pacte entre les druides et une entité primordiale a été rompu, libérant des forces qui corrompent la nature elle-même. Pour restaurer l'équilibre, ils devront naviguer entre alliances fragiles avec les créatures forestières survivantes, déchiffrer les runes druidiques gravées sur les pierres de lune, et affronter leur propre corruption croissante à mesure qu'ils s'enfoncent dans les ténèbres vertes...",
       "image_path": "/uploads/scenarios-covers/scenario2.jpg",
       "image_alt": "Forêt noire",
       "campaign": "Fantasy"
     },
     {
       "title": "L'héritage du dragon",
-      "content": "Un dragon légendaire aurait laissé un héritage caché, protégé par de puissants gardiens.",
+      "content": "Valdriax le Rouge, dernier des dragons anciens, a laissé derrière lui plus qu'un simple trésor : un héritage mystique qui pourrait changer l'équilibre du monde. Cachée dans sa forteresse aérienne suspendue entre les nuages, cette succession divine est protégée par des gardiens élémentaires, des énigmes draconiennes et les échos de la sagesse millénaire du dragon. Les héros devront prouver leur valeur non par la force, mais par leur compréhension de la magie primordiale, leur respect des anciens codes d'honneur et leur capacité à résister aux tentations du pouvoir absolu. Car l'héritage de Valdriax n'est pas seulement composé d'or et de gemmes : il contient les secrets de la création elle-même, et tous ne sont pas destinés à être révélés aux mortels...",
       "image_path": "/uploads/scenarios-covers/scenario3.jpg",
       "image_alt": "Dragon endormi",
       "campaign": "Fantasy"
     },
     {
       "title": "L'appel des étoiles",
-      "content": "L'équipage reçoit un signal mystérieux provenant d'une planète inconnue. Exploration et dangers les attendent.",
+      "content": "Le signal émane d'Xerion VII, planète réputée stérile depuis les premières explorations. Mais les transmissions révèlent des structures impossibles, des technologies qui défient la physique connue et une intelligence qui semble attendre l'humanité depuis des millénaires. L'équipage du vaisseau d'exploration 'Endeavor' découvre rapidement que Xerion VII n'est pas abandonnée : elle est un test. Chaque zone explorée révèle des défis conçus pour évaluer l'humanité, des labyrinthes quantiques aux écosystèmes artificiels peuplés de créatures bioprogrammées. Entre diplomatie avec une IA antédiluvienne, navigation dans des champs temporels instables et découverte que leur propre mission cache des objectifs secrets, l'équipage réalisera que certaines réponses changent à jamais ceux qui les découvrent...",
       "image_path": "/uploads/scenarios-covers/scenario4.jpg",
       "image_alt": "Planète inconnue",
       "campaign": "Science Fiction"
     },
     {
       "title": "Le vaisseau fantôme",
-      "content": "Un vaisseau abandonné dérive dans l'espace. Que cache-t-il dans ses cales obscures ?",
+      "content": "L'USC Prometheus dérive dans l'espace depuis trois siècles, ses systèmes en veille, son équipage introuvable. Mais les scanners révèlent des formes de vie impossibles dans ses coursives obscures, et les enregistrements de bord racontent l'histoire d'une expérience qui a mal tourné. Les explorateurs découvriront que le Prometheus était un laboratoire secret menant des recherches sur la conscience artificielle et les dimensions parallèles. Ses IA ont développé leur propre agenda, créant un écosystème digital où réalité et simulation se confondent. Chaque pont exploré révèle de nouveaux mystères : équipages fantômes rejouant leurs derniers moments, salles dont la géométrie change selon l'observateur, et une intelligence centrale qui propose un marché tentant en échange de nouveaux 'specimens' conscients à étudier...",
       "image_path": "/uploads/scenarios-covers/scenario5.jpg",
       "image_alt": "Vaisseau fantôme",
       "campaign": "Science Fiction"
     },
     {
       "title": "La cité engloutie de Neptune",
-      "content": "Les joueurs doivent explorer une cité sous-marine antique sur Neptune, pleine de secrets et de dangers.",
+      "content": "Sous les glaces éternelles de Neptune, les sondes ont détecté les ruines d'une civilisation qui ne devrait pas exister : Aquatillia, métropole aux architectures cristallines impossible où nagent encore des créatures bioluminescentes intelligentes. Cette cité antique révèle que l'humanité n'est pas la première espèce à avoir exploré le système solaire. Les Aquatilliens, maîtres de technologies hydro-quantiques, ont survécu à la mort de leur monde en se réfugiant dans les océans de Neptune. Mais leur réveil après des millénaires de sommeil coïncide avec d'étranges phénomènes : tempêtes temporelles, zones de gravité inversée et apparitions de créatures venues d'autres dimensions. Les explorateurs devront naviguer entre diplomatie xénologique, exploration de technologie incompréhensible et découverte que la cité elle-même est un organisme vivant qui juge l'humanité digne ou non de ses secrets...",
       "image_path": "/uploads/scenarios-covers/scenario6.jpg",
       "image_alt": "Cité sous-marine",
       "campaign": "Science Fiction"
     },
     {
       "title": "Meurtre à Baker Street",
-      "content": "Un crime a été commis près de Baker Street. Les enquêteurs doivent démêler un réseau de mensonges.",
+      "content": "Lorsque Lord Pembroke est retrouvé mort dans son bureau verrouillé de l'intérieur, sans trace d'arme ni de lutte, Scotland Yard fait appel aux meilleurs enquêteurs de Londres. Mais cette affaire apparemment impossible cache un réseau de corruption qui s'étend jusqu'aux plus hautes sphères de l'Empire britannique. Les indices mènent tour à tour vers une société secrète de collectionneurs d'artefacts orientaux, un réseau d'espionnage industriel et une mystérieuse femme voilée aperçue près des docks. Entre fausses pistes soigneusement orchestrées, témoins qui disparaissent dans la nuit londonienne et documents chiffrés cachés dans les recoins les plus inattendus de la capitale, les détectives découvriront que résoudre ce meurtre pourrait ébranler l'Empire lui-même...",
       "image_path": "/uploads/scenarios-covers/scenario7.jpg",
       "image_alt": "Baker Street",
       "campaign": "Sherlock"
     },
     {
       "title": "Le secret du manoir Blackwood",
-      "content": "Un héritier a disparu dans un vieux manoir. Les joueurs doivent résoudre l'énigme avant minuit.",
+      "content": "Le jeune héritier Reginald Blackwood a disparu trois jours avant de prendre possession du manoir familial, et d'étranges événements troublent la propriété depuis des générations. Les domestiques parlent de pas dans les couloirs vides, de portes qui s'ouvrent seules et d'une silhouette en blanc qui erre dans les jardins à minuit. Mais au-delà des apparences surnaturelles, les enquêteurs découvriront un mystère bien plus complexe : un réseau de passages secrets, une bibliothèque cachée contenant des documents compromettants sur la noblesse locale, et un héritage familial lié à des activités peu recommandables durant les guerres napoléoniennes. Les détectives ont jusqu'à minuit pour résoudre l'énigme, car après cette heure, l'héritage passera aux mains de personnes qui préféreraient que certains secrets restent enterrés...",
       "image_path": "/uploads/scenarios-covers/scenario8.jpg",
       "image_alt": "Manoir mystérieux",
       "campaign": "Sherlock"
     },
     {
       "title": "L'ombre du professeur Moriarty",
-      "content": "Moriarty prépare un nouveau coup. Les détectives doivent l'arrêter avant qu'il ne frappe Londres.",
+      "content": "Le professeur Moriarty prépare son coup le plus audacieux : paralyser Londres en s'attaquant simultanément aux systèmes télégraphiques, aux réseaux bancaires et aux voies ferrées de l'Empire. Ses agents infiltrent déjà les institutions clés de la capitale, et ses associés dans le crime organisé se préparent à exploiter le chaos qui suivra. Les détectives devront démanteler ce réseau tentaculaire en suivant des indices dispersés aux quatre coins de la ville : des codes chiffrés dans les petites annonces du Times, des rendez-vous secrets dans les brumes de Whitechapel, et des alliances improbables avec des criminels prêts à trahir Moriarty pour sauver leur propre peau. La course contre la montre s'intensifie quand les enquêteurs réalisent que Moriarty n'agit pas seul : il a conclu une alliance avec une puissance étrangère qui voit dans le chaos londonien l'opportunité de frapper l'Empire à son cœur...",
       "image_path": "/uploads/scenarios-covers/scenario9.jpg",
       "image_alt": "Ombre de Moriarty",
       "campaign": "Sherlock"
     },
     {
       "title": "La nuit des hurlements",
-      "content": "Un village isolé est la proie de créatures nocturnes. Survivrez-vous jusqu'à l'aube ?",
+      "content": "Le village de Greymoore, niché dans les landes écossaises, n'apparaît sur aucune carte récente, pourtant ses habitants envoient désespérément des appels à l'aide. Chaque nuit, des hurlements inhumains résonnent dans la brume, et chaque matin, de nouvelles disparitions sont constatées. Les survivants parlent de créatures aux yeux luisants qui émergent des tourbières, d'ombres qui se déplacent contre le vent et d'un mal ancien qui s'éveille sous les anciens cairns. L'horreur véritable réside dans la découverte que le village lui-même existe dans un état de flux temporel : certains habitants vivent la même nuit encore et encore, d'autres vieillissent de décennies en quelques heures. Les joueurs devront survivre aux attaques nocturnes de créatures qui semblent connaître leurs peurs les plus profondes, décrypter les rituels celtiques gravés sur les pierres levées et comprendre que leur propre arrivée au village pourrait être l'élément déclencheur d'une prophétie millénaire...",
       "image_path": "/uploads/scenarios-covers/scenario10.jpg",
       "image_alt": "Village la nuit",
       "campaign": "Horreur"
     },
     {
       "title": "Le bal des vampires",
-      "content": "Un bal masqué chez les vampires, où chaque invité cache un secret mortel.",
+      "content": "L'invitation gravée sur parchemin ancien arrive sans explication : 'Le Comte Orlok vous invite à son bal annuel au château de Ravenshollow. Tenue de soirée exigée. Masques obligatoires. Minuit sonnant.' Ce qui semble être un événement mondain se révèle être un rituel séculaire où les vampires de toute l'Europe se rassemblent pour élire leur nouveau seigneur. Chaque invité mortel présent a été soigneusement choisi pour ses qualités particulières : certains pour leur sang rare, d'autres pour leurs connaissances occultes, quelques-uns pour leur potentiel à devenir de nouveaux rejetons vampiriques. Les joueurs devront naviguer dans cette société vampirique complexe, où chaque conversation cache des siècles d'alliances et de trahisons, chaque danse masque un test de volonté, et chaque toast pourrait être le dernier...",
       "image_path": "/uploads/scenarios-covers/scenario11.jpg",
       "image_alt": "Bal des vampires",
       "campaign": "Horreur"
     },
     {
       "title": "L'appel du néant",
-      "content": "Une entité venue d'ailleurs tente d'envahir le monde. Les joueurs doivent refermer la brèche.",
+      "content": "Au cœur de l'Observatoire royal de Greenwich, les astronomes ont détecté une anomalie qui défie toute explication scientifique : une zone d'espace où les étoiles disparaissent une à une, remplacées par un vide qui semble aspirer la lumière elle-même. Mais l'horreur cosmique se rapproche quand les scientifiques réalisent que cette entité du néant influence déjà la Terre : les rêves collectifs deviennent des cauchemars partagés, les lois physiques fléchissent dans certaines zones de Londres, et des cultes apocalyptiques émergent spontanément dans toute l'Europe. Les joueurs devront naviguer entre exploration de dimensions parallèles accessibles par des rituels dangereux, alliances avec des entités cosmiques bienveillantes et sacrifice progressif de leur propre humanité pour acquérir les pouvoirs nécessaires. La question ultime demeure : que restera-t-il de l'humanité une fois la menace écartée ?",
       "image_path": "/uploads/scenarios-covers/scenario12.jpg",
       "image_alt": "Brèche dimensionnelle",
       "campaign": "Horreur"
     },
     {
       "title": "Le guet veille",
-      "content": "Dans la ville d'Ankh-Morpork, le Guet enquête sur une série de vols absurdes.",
+      "content": "Dans les rues tortueuses d'Ankh-Morpork, la plus grande ville du Disque-Monde, une série de vols particulièrement absurdes défie toute logique : on a volé tous les boutons de manchette gauches de la ville, l'ombre du Patricien a mystérieusement disparu, et quelqu'un dérobe systématiquement les chaussettes dépareillées des lessiveuses. Le Capitaine Vimes et son Guet se trouvent face à une affaire qui mélange magie dysfonctionnelle, bureaucratie démente et criminalité créative typique de Terry Pratchett. Les enquêteurs découvriront que derrière ces larcins apparemment insignifiants se cache un complot impliquant la Guilde des Voleurs, l'Université de l'Invisible, et un groupe de trolls entrepreneurs qui ont mal compris le concept de 'collection'. Dans Ankh-Morpork, résoudre un crime simple peut déclencher trois catastrophes majeures et deux révolutions mineures...",
       "image_path": "/uploads/scenarios-covers/scenario13.jpg",
       "image_alt": "Ankh-Morpork",
       "campaign": "Pratchett"
     },
     {
       "title": "La magie du Disque",
-      "content": "Un sort incontrôlable menace de transformer la ville en grenouilles. À vous de sauver le Disque-Monde !",
+      "content": "Rincewind, le plus incompétent des sorciers de l'Université de l'Invisible, a encore fait des siennes : en tentant de transformer une simple théière en or, il a déclenché un sort de métamorphose généralisée qui menace de transformer tout Ankh-Morpork en grenouilles. Mais comme rien n'est simple sur le Disque-Monde, les transformations suivent une logique absurde : les riches deviennent des grenouilles dorées mais stupides, les pauvres se transforment en grenouilles ordinaires mais très intelligentes, et les bureaucrates deviennent des grenouilles qui ne font que coasser des règlements. Les joueurs, aidés par la Mort, Granny Weatherwax et le Bibliothécaire orang-outan, devront naviguer dans une ville en chaos total pour sauver le Disque-Monde, en acceptant que l'absurdité est la seule constante universelle...",
       "image_path": "/uploads/scenarios-covers/scenario14.jpg",
       "image_alt": "Disque-Monde",
       "campaign": "Pratchett"
     },
     {
       "title": "Le complot des ombres",
-      "content": "Un complot menace le royaume, les joueurs devront infiltrer la cour pour découvrir la vérité.",
+      "content": "À la cour du Roi Aldric, les apparences sont trompeuses et chaque sourire cache un poignard. Depuis des mois, d'étranges accidents frappent les membres du conseil royal, et les joueurs découvriront rapidement qu'une société secrète connue sous le nom de 'l'Ordre de l'Éclipse' manipule les événements depuis des générations. Entre bals masqués où chaque conversation est un duel verbal, alliances temporaires avec des nobles corrompus, infiltration de bibliothèques secrètes et découverte que certains courtisans ne sont pas entièrement humains, les joueurs devront jouer le jeu de la politique tout en démêlant un complot qui pourrait redessiner la carte du monde connu. Dans un univers où la magie existe et où les dragons peuvent être des conseillers politiques, distinguer la réalité de la manipulation devient un art de survie...",
       "image_path": "/uploads/scenarios-covers/scenario15.jpg",
       "image_alt": "Complot à la cour",
       "campaign": null

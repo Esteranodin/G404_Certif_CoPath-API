@@ -28,8 +28,9 @@ class CampaignFixtures extends Fixture implements DependentFixtureInterface
             $campaign = new Campaign();
             $campaign->setName($campaignData['name']);
             $campaign->setTheme($campaignData['theme']);
-            $user = $this->getReference('user_' . $faker->numberBetween(0, 9), User::class);
-            $campaign->setUser($user);
+            $campaign->setUser($this->getReference('user_' . $faker->numberBetween(0, 9), User::class));
+            $campaign->setCreatedAt(new \DateTimeImmutable($faker->dateTimeBetween('-8 months', '-2 months')->format('Y-m-d H:i:s')));
+            $campaign->setUpdatedAt(new \DateTimeImmutable($faker->dateTimeBetween('-8 months', '-2 months')->format('Y-m-d H:i:s')));
             $manager->persist($campaign);
             $this->addReference('campaign_' . $campaignData['theme'], $campaign);
         }

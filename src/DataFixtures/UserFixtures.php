@@ -28,6 +28,8 @@ class UserFixtures extends Fixture
         $admin->setPassword($this->hasher->hashPassword($admin, 'pamelarose'));
         $admin->setPseudo('PamelaRose');
         $admin->setAvatar('/uploads/user-avatars/avatar1.jpg');
+        $admin->setCreatedAt(new \DateTimeImmutable($faker->dateTimeBetween('-2 years', '-1 year')->format('Y-m-d H:i:s')));
+        $admin->setUpdatedAt(new \DateTimeImmutable($faker->dateTimeBetween('-2 years', '-1 year')->format('Y-m-d H:i:s')));
         $manager->persist($admin);
         $this->addReference('user_admin', $admin);
 
@@ -39,6 +41,9 @@ class UserFixtures extends Fixture
             $user->setPassword($this->hasher->hashPassword($user, 'password'));
             $user->setPseudo($faker->userName());
             $user->setAvatar($faker->imageUrl(128, 128, 'people', true, 'avatar'));
+            $user->setCreatedAt(new \DateTimeImmutable($faker->dateTimeBetween('-1 year', '-1 month')->format('Y-m-d H:i:s')));
+            $user->setUpdatedAt(new \DateTimeImmutable($faker->dateTimeBetween('-1 year', '-1 month')->format('Y-m-d H:i:s')));
+
             $manager->persist($user);
             $this->addReference('user_' . $i, $user);
         }

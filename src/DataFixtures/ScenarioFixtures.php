@@ -30,11 +30,11 @@ class ScenarioFixtures extends Fixture implements DependentFixtureInterface
             $scenario = new Scenario();
             $scenario->setTitle($scenarioData['title']);
             $scenario->setContent($scenarioData['content']);
-            $scenario->setCreatedAt(new \DateTimeImmutable());
-            $scenario->setUpdatedAt(new \DateTimeImmutable());
 
-            $user = $this->getReference('user_' . $faker->numberBetween(0, 9), User::class);
-            $scenario->setUser($user);
+            $scenario->setCreatedAt(new \DateTimeImmutable($faker->dateTimeBetween('-1 year', 'now')->format('Y-m-d H:i:s')));
+            $scenario->setUpdatedAt(new \DateTimeImmutable($faker->dateTimeBetween('-1 year', 'now')->format('Y-m-d H:i:s')));
+
+            $scenario->setUser($this->getReference('user_' . $faker->numberBetween(0, 9), User::class));
 
             if (!empty($scenarioData['campaign'])) {
                 $scenario->addCampaign($this->getReference('campaign_' . $scenarioData['campaign'], Campaign::class));
