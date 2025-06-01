@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use App\Entity\Traits\BlamableTrait;
 use App\Entity\Traits\TimestampableTrait;
+use App\Provider\FavoriteCollectionProvider;
 use App\Repository\FavoriteRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -28,7 +29,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         ),
         new GetCollection(
             normalizationContext: ['groups' => ['favorite:read']],
-            security: "is_granted('ROLE_USER')"
+            security: "is_granted('ROLE_USER')", 
+            provider: FavoriteCollectionProvider::class
         ),
         new Post(
             denormalizationContext: ['groups' => ['favorite:write']],
