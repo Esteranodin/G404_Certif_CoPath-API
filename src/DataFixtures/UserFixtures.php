@@ -26,7 +26,7 @@ class UserFixtures extends Fixture
         $admin->setEmail('pamelarose@admin.com');
         $admin->setRoles(['ROLE_ADMIN']);
         $admin->setPassword($this->hasher->hashPassword($admin, 'pamelarose'));
-        $admin->setPseudo('PamelaRose');
+        $admin->setPseudo('SuperAdmin');
         $admin->setAvatar('/uploads/user-avatars/avatar1.jpg');
         $admin->setCreatedAt(new \DateTimeImmutable($faker->dateTimeBetween('-2 years', '-1 year')->format('Y-m-d H:i:s')));
         $admin->setUpdatedAt(new \DateTimeImmutable($faker->dateTimeBetween('-2 years', '-1 year')->format('Y-m-d H:i:s')));

@@ -6,8 +6,8 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
 use App\Entity\Traits\BlamableTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\RatingRepository;
@@ -38,7 +38,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
             security: "is_granted('ROLE_USER')",
             securityMessage: "Seuls les utilisateurs connectés peuvent noter"
         ),
-        new Put(
+        new Patch(
             denormalizationContext: ['groups' => ['rating:write']],
             security: "is_granted('RATING_EDIT', object)",
             securityMessage: "Vous ne pouvez modifier que vos propres notes"
