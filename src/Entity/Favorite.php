@@ -7,11 +7,13 @@ use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
+use App\DataPersister\FavoriteDataPersister as DataPersisterFavoriteDataPersister;
 use App\Entity\Traits\BlamableTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Provider\FavoriteCollectionProvider;
 use App\Repository\FavoriteRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\DataPersister\FavoriteDataPersister;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -34,6 +36,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         ),
         new Post(
             denormalizationContext: ['groups' => ['favorite:write']],
+                processor: FavoriteDataPersister::class,
             security: "is_granted('ROLE_USER')",
             securityMessage: "Seuls les utilisateurs connectés peuvent ajouter des favoris"
         ),
@@ -65,13 +68,10 @@ class Favorite
     #[Groups(['favorite:read'])]
     private ?User $user = null;
 
-    #[ORM\Column(nullable: true)]
-    #[Groups(['favorite:read'])]
-    private ?\DateTimeImmutable $createdAt = null;
-
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -98,17 +98,6 @@ class Favorite
     public function setUser(?User $user): static
     {
         $this->user = $user;
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(?\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
         return $this;
     }
 }

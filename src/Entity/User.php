@@ -56,7 +56,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['user:write'], ['user:read'])]
+    #[Groups(['user:write','user:read'])]
     private ?string $email = null;
 
     /**
@@ -82,7 +82,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The pseudo of the user
      */
     #[ORM\Column(length: 17, unique: true, nullable: true)]
-    #[Groups(['user:write'], ['user:read'])]
+    #[Groups(['user:write','user:read'])]
     private ?string $pseudo = null;
 
     /**

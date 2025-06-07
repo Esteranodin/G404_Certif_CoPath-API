@@ -1,4 +1,5 @@
 <?php
+
 namespace App\DataPersister;
 
 use ApiPlatform\Metadata\Operation;
@@ -6,27 +7,32 @@ use ApiPlatform\State\ProcessorInterface;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 
-class UserDataPersister implements ProcessorInterface
+class UserDataPersister extends AbstractDataPersister implements ProcessorInterface
 {
+    private readonly UserPasswordHasherInterface $passwordHasher;
+
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
-        private readonly UserPasswordHasherInterface $passwordHasher
-    ) {}
+        EntityManagerInterface $entityManager,
+        Security $security,
+        UserPasswordHasherInterface $passwordHasher
+    ) {
+        parent::__construct($entityManager, $security);
+        $this->passwordHasher = $passwordHasher;
+    }
 
-    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): User
+    protected function processSpecific(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): void
     {
-        if ($data instanceof User) {
-            if ($data->getPassword()) {
-                $hashedPassword = $this->passwordHasher->hashPassword($data, $data->getPassword());
-                $data->setPassword($hashedPassword);
-            }
-            $data->setRoles(['ROLE_USER']);
-
-            $this->entityManager->persist($data);
-            $this->entityManager->flush();
+        if (!$data instanceof User) {
+            return;
         }
 
-        return $data;
+        if ($data->getPassword()) {
+            $hashedPassword = $this->passwordHasher->hashPassword($data, $data->getPassword());
+            $data->setPassword($hashedPassword);
+        }
+
+        $data->setRoles(['ROLE_USER']);
     }
 }

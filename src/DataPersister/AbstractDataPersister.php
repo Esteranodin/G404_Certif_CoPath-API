@@ -18,18 +18,17 @@ abstract class AbstractDataPersister implements ProcessorInterface
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
-        // Vérifier si l'entité a la méthode setUser (BlamableTrait)
         if (method_exists($data, 'setUser') && $operation instanceof Post) {
             $data->setUser($this->security->getUser());
         }
         
-        // Vérifier si l'entité a la méthode setCreatedAt (TimestampableTrait)
+        // Initialiser createdAt ET updatedAt lors de la création
         if (method_exists($data, 'setCreatedAt') && $operation instanceof Post) {
             $data->setCreatedAt(new \DateTimeImmutable());
         }
         
-        // Vérifier si l'entité a la méthode setUpdatedAt (TimestampableTrait)
-        if (method_exists($data, 'setUpdatedAt') && ($operation instanceof Post || $operation instanceof Patch)) {
+        // Toujours initialiser updatedAt (création ET modification)
+        if (method_exists($data, 'setUpdatedAt')) {
             $data->setUpdatedAt(new \DateTimeImmutable());
         }
         

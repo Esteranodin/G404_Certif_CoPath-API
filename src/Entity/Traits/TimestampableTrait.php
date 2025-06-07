@@ -33,4 +33,6 @@ trait TimestampableTrait
         $this->updatedAt = $updatedAt;
         return $this;
     }
+
+    
 }
