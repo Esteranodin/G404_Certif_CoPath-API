@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataPersister;
+namespace App\State\Processor;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 
-class UserDataPersister extends AbstractDataPersister implements ProcessorInterface
+class UserProcessor extends AbstractProcessor implements ProcessorInterface
 {
     private readonly UserPasswordHasherInterface $passwordHasher;
 

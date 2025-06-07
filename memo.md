@@ -1,6 +1,6 @@
 SUPPRIMER etat nullable de ce qui ne le sera pas
 
-
+Supprimer tous les imports HS + tout le code commenté inutile (repo, ...)
 
 
 ** faire role et connection pour dashboard

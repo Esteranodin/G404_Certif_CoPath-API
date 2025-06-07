@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataPersister;
+namespace App\State\Processor;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\Metadata\Post;
@@ -10,7 +10,7 @@ use App\Service\ScenarioService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 
-class ScenarioDataPersister extends AbstractDataPersister implements ProcessorInterface
+class ScenarioProcessor extends AbstractProcessor implements ProcessorInterface
 {
     public function __construct(
         EntityManagerInterface $entityManager,

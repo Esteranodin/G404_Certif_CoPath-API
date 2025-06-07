@@ -10,7 +10,9 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Entity\Traits\BlamableTrait;
 use App\Entity\Traits\TimestampableTrait;
+use App\State\Provider\UserRatingCollectionProvider;
 use App\Repository\RatingRepository;
+use App\State\Processor\RatingProcessor;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -27,24 +29,26 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
     operations: [
         new Get(
             normalizationContext: ['groups' => ['rating:read']],
-            security: "is_granted('ROLE_USER')"
+            security: "is_granted('ROLE_USER') and object.getUser() == user"
         ),
         new GetCollection(
             normalizationContext: ['groups' => ['rating:read']],
-            security: "is_granted('ROLE_USER')"
+            security: "is_granted('ROLE_USER')",
+            provider: UserRatingCollectionProvider::class
         ),
         new Post(
             denormalizationContext: ['groups' => ['rating:write']],
+            processor: RatingProcessor::class, 
             security: "is_granted('ROLE_USER')",
             securityMessage: "Seuls les utilisateurs connectés peuvent noter"
         ),
         new Patch(
             denormalizationContext: ['groups' => ['rating:write']],
-            security: "is_granted('RATING_EDIT', object)",
+            security: "is_granted('ROLE_USER') and object.getUser() == user",
             securityMessage: "Vous ne pouvez modifier que vos propres notes"
         ),
         new Delete(
-            security: "is_granted('RATING_DELETE', object)",
+            security: "is_granted('ROLE_USER') and object.getUser() == user",
             securityMessage: "Vous ne pouvez supprimer que vos propres notes"
         ),
     ]
@@ -70,7 +74,8 @@ class Rating
     #[Groups(['rating:read'])]
     private ?User $user = null;
 
-    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    #[ORM\Column(type: Types::SMALLINT)]
+    #[Assert\NotNull(message: 'La note est obligatoire')]
     #[Assert\Range(
         min: 0,
         max: 5,
@@ -79,17 +84,10 @@ class Rating
     #[Groups(['rating:read', 'rating:write'])]
     private ?int $score = null;
 
-    #[ORM\Column(nullable: true)]
-    #[Groups(['rating:read'])]
-    private ?\DateTimeImmutable $createdAt = null;
-
-    #[ORM\Column(nullable: true)]
-    #[Groups(['rating:read'])]
-    private ?\DateTimeImmutable $updatedAt = null;
-
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -105,6 +103,17 @@ class Rating
     public function setScenario(?Scenario $scenario): static
     {
         $this->scenario = $scenario;
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
         return $this;
     }
 

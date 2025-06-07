@@ -7,13 +7,12 @@ use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
-use App\DataPersister\FavoriteDataPersister as DataPersisterFavoriteDataPersister;
 use App\Entity\Traits\BlamableTrait;
 use App\Entity\Traits\TimestampableTrait;
-use App\Provider\FavoriteCollectionProvider;
+use App\State\Provider\FavoriteCollectionProvider;
 use App\Repository\FavoriteRepository;
+use App\State\Processor\FavoriteProcessor;
 use Doctrine\ORM\Mapping as ORM;
-use App\DataPersister\FavoriteDataPersister;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -36,7 +35,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         ),
         new Post(
             denormalizationContext: ['groups' => ['favorite:write']],
-                processor: FavoriteDataPersister::class,
+                processor: FavoriteProcessor::class,
             security: "is_granted('ROLE_USER')",
             securityMessage: "Seuls les utilisateurs connectés peuvent ajouter des favoris"
         ),

@@ -8,10 +8,10 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use App\DataPersister\ScenarioDataPersister;
 use App\Entity\Traits\BlamableTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\MusicRepository;
+use App\State\Processor\ScenarioProcessor;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
@@ -29,7 +29,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
         new Post(
             denormalizationContext: ['groups' => ['scenario:write']],
             security: "is_granted('ROLE_USER')",
-            processor: ScenarioDataPersister::class,
+            processor: ScenarioProcessor::class,
             securityMessage: "Seuls les utilisateurs connectés peuvent partager des scénarios"
         ),
         new Patch(

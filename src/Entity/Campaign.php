@@ -8,10 +8,10 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use App\DataPersister\CampaignDataPersister;
 use App\Entity\Traits\BlamableTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\CampaignRepository;
+use App\State\Processor\CampaignProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -31,7 +31,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
         new Post(
             denormalizationContext: ['groups' => ['campaign:write']],
             security: "is_granted('ROLE_USER')",
-            processor: CampaignDataPersister::class,
+            processor: CampaignProcessor::class,
             securityMessage: "Seuls les utilisateurs connectés peuvent partager des scénarios"
         ),
         new Patch(

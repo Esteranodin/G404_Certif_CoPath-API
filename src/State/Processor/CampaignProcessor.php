@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataPersister;
+namespace App\State\Processor;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
@@ -8,7 +8,7 @@ use App\Entity\Campaign;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 
-class CampaignDataPersister extends AbstractDataPersister implements ProcessorInterface
+class CampaignProcessor extends AbstractProcessor implements ProcessorInterface
 {
     public function __construct(
         EntityManagerInterface $entityManager,

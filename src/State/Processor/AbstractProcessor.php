@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataPersister;
+namespace App\State\Processor;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\Metadata\Patch;
@@ -9,7 +9,7 @@ use ApiPlatform\State\ProcessorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 
-abstract class AbstractDataPersister implements ProcessorInterface
+abstract class AbstractProcessor implements ProcessorInterface
 {
     public function __construct(
         protected readonly EntityManagerInterface $entityManager,
@@ -19,7 +19,10 @@ abstract class AbstractDataPersister implements ProcessorInterface
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
         if (method_exists($data, 'setUser') && $operation instanceof Post) {
-            $data->setUser($this->security->getUser());
+            $currentUser = $this->security->getUser();
+            if ($currentUser) {
+                $data->setUser($currentUser);
+            }
         }
         
         // Initialiser createdAt ET updatedAt lors de la création

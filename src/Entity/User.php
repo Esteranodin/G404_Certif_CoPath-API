@@ -6,10 +6,10 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use App\DataPersister\UserDataPersister;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\UserRepository;
-use App\Provider\MeProvider;
+use App\State\Processor\UserProcessor;
+use App\State\Provider\MeProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,7 +27,7 @@ use Symfony\Component\Serializer\Attribute\Ignore;
             denormalizationContext: ['groups' => ['user:write']],
             validationContext: ['groups' => ['Default']],
             security: "is_granted('PUBLIC_ACCESS')",
-            processor: UserDataPersister::class
+            processor: UserProcessor::class
         ),
         new Get(
             uriTemplate: '/me',
@@ -41,7 +41,7 @@ use Symfony\Component\Serializer\Attribute\Ignore;
             denormalizationContext: ['groups' => ['user:write']],
             validationContext: ['groups' => ['Default']],
             security: "is_granted('PUBLIC_ACCESS')",
-            processor: UserDataPersister::class
+            processor: UserProcessor::class
         ),
     ]
 )]
