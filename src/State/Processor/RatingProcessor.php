@@ -22,7 +22,7 @@ class RatingProcessor extends AbstractProcessor implements ProcessorInterface
 
     protected function processSpecific(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): void
     {
-        if (!$data instanceof Rating || !$operation instanceof Post) {
+        if (!$data instanceof Rating) {
             return;
         }
 
@@ -37,10 +37,19 @@ class RatingProcessor extends AbstractProcessor implements ProcessorInterface
         if ($existingRating) {
             $existingRating->setScore($data->getScore());
             $existingRating->setUpdatedAt(new \DateTimeImmutable());
-
-            throw new \Symfony\Component\HttpKernel\Exception\ConflictHttpException(
-                'Note mise à jour avec succès'
-            );
+            $data = $existingRating; 
         }
+
+        $this->updateScenarioRatingStats($scenario);
+    }
+
+    private function updateScenarioRatingStats($scenario): void
+    {
+        $stats = $this->ratingRepository->getScenarioRatingStats($scenario->getId());
+
+        $scenario->setAverageRating($stats['average']);
+        $scenario->setRatingsCount($stats['count']);
+
+        $this->entityManager->persist($scenario);
     }
 }

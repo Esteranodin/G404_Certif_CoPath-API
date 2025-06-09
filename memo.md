@@ -24,7 +24,16 @@ update image pas patch mais post ==> donc 2 routes post (1 création et une pour
 
 UPLOADS dans .gitignore + gérer l'upload
 
+
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+FINIR DTO Scenario
+Cache React Query → Performance front optimisée
+Rate Limiting → Protection API
+Tests unitaires → Qualité code
+
+
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
 
-J'ai viré les interfaces ; HasUserInterface; HasUpdatedAtInterface; HasCreatedAtInterface pour en faire des traits docn si jamais abstrctCrudController et abstractPersister deconne...
+que se passe t il si je me co avec un banni ? 

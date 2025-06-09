@@ -8,10 +8,17 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Dto\Scenario\ScenarioCreateInput;
+use App\Dto\Scenario\ScenarioDetailOutput;
+use App\Dto\Scenario\ScenarioUpdateInput;
 use App\Entity\Traits\BlamableTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\ScenarioRepository;
+use App\State\Processor\ScenarioCreateProcessor;
 use App\State\Processor\ScenarioProcessor;
+use App\State\Processor\ScenarioUpdateProcessor;
+use App\State\Provider\ScenarioDetailProvider;
+use App\State\Provider\ScenarioSearchProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -21,22 +28,27 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Entity(repositoryClass: ScenarioRepository::class)]
 #[ApiResource(
     operations: [
-        new Get(
-            normalizationContext: ['groups' => ['scenario:read']],
+        new GetCollection(
+            uriTemplate: '/scenarios/search',
+            provider: ScenarioSearchProvider::class,
             security: "is_granted('PUBLIC_ACCESS')"
         ),
-        new GetCollection(
-            normalizationContext: ['groups' => ['scenario:read']],
+        new Get(
+            output: ScenarioDetailOutput::class,
+            provider: ScenarioDetailProvider::class,
             security: "is_granted('PUBLIC_ACCESS')"
         ),
         new Post(
-            denormalizationContext: ['groups' => ['scenario:write']],
+            input: ScenarioCreateInput::class,
+            output: ScenarioDetailOutput::class,
+            processor: ScenarioCreateProcessor::class,
             security: "is_granted('ROLE_USER')",
-            processor: ScenarioProcessor::class,
-            securityMessage: "Seuls les utilisateurs connectés peuvent partager des scénarios"
+            securityMessage: "Seuls les utilisateurs connectés peuvent créer des scénarios"
         ),
         new Patch(
-            denormalizationContext: ['groups' => ['scenario:write']],
+            input: ScenarioUpdateInput::class,
+            output: ScenarioDetailOutput::class,
+            processor: ScenarioUpdateProcessor::class,
             security: "is_granted('SCENARIO_EDIT', object)",
             securityMessage: "Vous ne pouvez modifier que vos propres scénarios"
         ),
@@ -103,6 +115,14 @@ class Scenario
     #[ORM\OneToMany(targetEntity: Rating::class, mappedBy: 'scenario')]
     private Collection $ratings;
 
+    #[ORM\Column(type: 'decimal', precision: 3, scale: 1, options: ['default' => 0])]
+    #[Groups(['scenario:read'])]
+    private float $averageRating = 0;
+
+    #[ORM\Column(type: 'integer', options: ['default' => 0])]
+    #[Groups(['scenario:read'])]
+    private int $ratingsCount = 0;
+
     /**
      * @var Collection<int, Favorite>
      */
@@ -122,28 +142,13 @@ class Scenario
     #[Groups(['scenario:read'])]
     public function getAverageRating(): float
     {
-        $ratingsWithScore = $this->ratings->filter(function ($rating) {
-            return $rating->getScore() !== null;
-        });
-
-        if ($ratingsWithScore->isEmpty()) {
-            return 0;
-        }
-
-        $total = 0;
-        foreach ($ratingsWithScore as $rating) {
-            $total += $rating->getScore();
-        }
-
-        return round($total / $ratingsWithScore->count(), 1);
+        return $this->averageRating;
     }
 
     #[Groups(['scenario:read'])]
     public function getRatingsCount(): int
     {
-        return $this->ratings->filter(function ($rating) {
-            return $rating->getScore() !== null;
-        })->count();
+        return $this->ratingsCount;
     }
 
     #[Groups(['scenario:read'])]
@@ -327,6 +332,18 @@ class Scenario
             }
         }
 
+        return $this;
+    }
+
+    public function setAverageRating(float $averageRating): self
+    {
+        $this->averageRating = $averageRating;
+        return $this;
+    }
+
+    public function setRatingsCount(int $ratingsCount): self
+    {
+        $this->ratingsCount = $ratingsCount;
         return $this;
     }
 }

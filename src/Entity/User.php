@@ -6,16 +6,20 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Dto\User\UserRegisterInput;
+use App\Dto\User\UserMeOutput;
+use App\Dto\User\UserPasswordInput;
+use App\Dto\User\UserUpdateInput;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\UserRepository;
 use App\State\Processor\UserProcessor;
+use App\State\Processor\UserPasswordProcessor;
 use App\State\Provider\MeProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\Ignore;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -24,24 +28,30 @@ use Symfony\Component\Serializer\Attribute\Ignore;
     operations: [
         new Post(
             uriTemplate: '/register',
-            denormalizationContext: ['groups' => ['user:write']],
-            validationContext: ['groups' => ['Default']],
-            security: "is_granted('PUBLIC_ACCESS')",
-            processor: UserProcessor::class
+            input: UserRegisterInput::class,
+            output: UserMeOutput::class,
+            processor: UserProcessor::class,
+            security: "is_granted('PUBLIC_ACCESS')"
         ),
         new Get(
             uriTemplate: '/me',
-            normalizationContext: ['groups' => ['user:read']],
-            security: "is_granted('ROLE_USER')",
-            securityMessage: 'You do not have access to this resource.',
-            provider: MeProvider::class
+            output: UserMeOutput::class,
+            provider: MeProvider::class,
+            security: "is_granted('ROLE_USER')"
         ),
         new Patch(
             uriTemplate: '/me',
-            denormalizationContext: ['groups' => ['user:write']],
-            validationContext: ['groups' => ['Default']],
-            security: "is_granted('PUBLIC_ACCESS')",
-            processor: UserProcessor::class
+            input: UserUpdateInput::class,
+            output: UserMeOutput::class,
+            processor: UserProcessor::class,
+            security: "is_granted('ROLE_USER')"
+        ),
+        new Patch(
+            uriTemplate: '/me/password',
+            input: UserPasswordInput::class,
+            output: UserMeOutput::class,
+            processor: UserPasswordProcessor::class,
+            security: "is_granted('ROLE_USER')"
         ),
     ]
 )]
@@ -56,7 +66,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['user:write','user:read'])]
     private ?string $email = null;
 
     /**
@@ -69,7 +78,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Groups(['user:write'])]
     private ?string $password = null;
 
     /**
@@ -82,7 +90,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The pseudo of the user
      */
     #[ORM\Column(length: 17, unique: true, nullable: true)]
-    #[Groups(['user:write','user:read'])]
     private ?string $pseudo = null;
 
     /**
@@ -106,7 +113,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The picture avatar of the user
      */
-    #[ORM\Column(type:'string', length: 255, nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $avatar = null;
 
     /**
@@ -129,7 +136,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->ratings = new ArrayCollection();
         $this->favorites = new ArrayCollection();
     }
-    
+
     public function __toString(): string
     {
         return $this->getPseudo() ?? 'Utilisateur';
@@ -170,10 +177,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
 
-        return array_unique($roles);
+        if (!in_array('ROLE_USER', $roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+
+        return $roles;
     }
 
     /**
