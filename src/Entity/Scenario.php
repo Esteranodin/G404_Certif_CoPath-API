@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Dto\Scenario\ScenarioCreateInput;
 use App\Dto\Scenario\ScenarioDetailOutput;
+use App\Dto\Scenario\ScenarioListOutput;
 use App\Dto\Scenario\ScenarioUpdateInput;
 use App\Entity\Traits\BlamableTrait;
 use App\Entity\Traits\TimestampableTrait;
@@ -30,6 +31,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
     operations: [
         new GetCollection(
             uriTemplate: '/scenarios/search',
+            output: ScenarioListOutput::class,
             provider: ScenarioSearchProvider::class,
             security: "is_granted('PUBLIC_ACCESS')"
         ),

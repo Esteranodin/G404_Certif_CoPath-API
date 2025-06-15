@@ -41,7 +41,8 @@ class ScenarioRepository extends ServiceEntityRepository
             ->leftJoin('s.user', 'u')
             ->leftJoin('s.campaign', 'c')
             ->leftJoin('s.img', 'i')
-            ->leftJoin('s.music', 'm');
+            ->leftJoin('s.music', 'm')
+            ->addSelect('u', 'c', 'i', 'm');
 
         if ($input->search) {
             $qb->andWhere('s.title LIKE :search OR s.content LIKE :search')

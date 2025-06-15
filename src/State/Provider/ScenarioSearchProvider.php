@@ -21,14 +21,12 @@ class ScenarioSearchProvider implements ProviderInterface
         $request = $context['request'] ?? null;
         if ($request) {
             $searchInput->search = $request->query->get('search');
-            $searchInput->campaigns = $request->query->get('campaigns') ? 
-                explode(',', $request->query->get('campaigns')) : null;
+            $searchInput->campaigns = $request->query->get('campaigns');
             $searchInput->authorId = $request->query->get('authorId');
             $searchInput->minRating = $request->query->get('minRating');
             $searchInput->minRatingsCount = $request->query->get('minRatingsCount');
             $searchInput->hasFavorites = $request->query->getBoolean('hasFavorites');
             $searchInput->hasImages = $request->query->getBoolean('hasImages');
-            // $searchInput->hasMusic = $request->query->getBoolean('hasMusic');
             $searchInput->sortBy = $request->query->get('sortBy', 'createdAt');
             $searchInput->sortOrder = $request->query->get('sortOrder', 'DESC');
             $searchInput->page = (int) $request->query->get('page', 1);
@@ -45,13 +43,13 @@ class ScenarioSearchProvider implements ProviderInterface
         );
 
         return [
-            'hydra:member' => $results,
-            'hydra:totalItems' => $total,
-            'hydra:view' => [
-                'hydra:first' => "?page=1",
-                'hydra:last' => "?page=" . ceil($total / $searchInput->itemsPerPage),
-                'hydra:previous' => $searchInput->page > 1 ? "?page=" . ($searchInput->page - 1) : null,
-                'hydra:next' => $searchInput->page < ceil($total / $searchInput->itemsPerPage) ? "?page=" . ($searchInput->page + 1) : null,
+            'member' => $results,
+            'totalItems' => $total,
+            'view' => [
+                'first' => "?page=1",
+                'last' => "?page=" . ceil($total / $searchInput->itemsPerPage),
+                'previous' => $searchInput->page > 1 ? "?page=" . ($searchInput->page - 1) : null,
+                'next' => $searchInput->page < ceil($total / $searchInput->itemsPerPage) ? "?page=" . ($searchInput->page + 1) : null,
             ]
         ];
     }

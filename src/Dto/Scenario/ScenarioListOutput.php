@@ -12,8 +12,8 @@ class ScenarioListOutput
     public float $averageRating;
     public int $ratingsCount;
     public int $favoritesCount;
-    public string $createdAt;
-    public string $updatedAt;
+    public \DateTimeInterface $createdAt;  
+    public \DateTimeInterface $updatedAt; 
 
     public array $author;
     public array $images;
@@ -21,19 +21,12 @@ class ScenarioListOutput
 
     public static function fromEntity(Scenario $scenario): self
     {
-        error_log('🔍 DTO - Converting scenario ID: ' . $scenario->getId());
-
         $output = new self();
         $output->id = $scenario->getId();
         $output->title = $scenario->getTitle();
-
-        $output->content = $scenario->getContent() ?? '';
-
-        $output->averageRating = $scenario->getAverageRating();
-        $output->ratingsCount = $scenario->getRatingsCount();
-        $output->favoritesCount = $scenario->getFavoritesCount();
-        $output->createdAt = $scenario->getCreatedAt()?->format('c') ?? '';
-        $output->updatedAt = $scenario->getUpdatedAt()?->format('c') ?? '';
+        $output->content = $scenario->getContent();
+        $output->createdAt = $scenario->getCreatedAt();
+        $output->updatedAt = $scenario->getUpdatedAt();
 
         $user = $scenario->getUser();
         $output->author = [
@@ -41,14 +34,35 @@ class ScenarioListOutput
             'name' => $user->getPseudo() ?? 'Utilisateur'
         ];
 
+        // Ratings
+        $ratings = $scenario->getRatings();
+        if ($ratings->count() > 0) {
+            $total = 0;
+            foreach ($ratings as $rating) {
+                $total += $rating->getScore();
+            }
+            $output->averageRating = $total / $ratings->count();
+        } else {
+            $output->averageRating = 0.0;
+        }
+        $output->ratingsCount = $ratings->count();
+
+        // Favoris
+        $output->favoritesCount = $scenario->getFavorites()->count();
+
+        // ✅ RÉCUPÈRE LES VRAIES IMAGES
+        $images = $scenario->getImg();
         $output->images = [];
-        foreach ($scenario->getImg() as $image) {
+        
+        foreach ($images as $image) {
             $output->images[] = [
                 'id' => $image->getId(),
-                'url' => $image->getImgPath()
+                'path' => $image->getImgPath(),
+                'alt' => $image->getImgAlt()
             ];
         }
 
+        // Campaigns
         $output->campaigns = [];
         foreach ($scenario->getCampaign() as $campaign) {
             $output->campaigns[] = [
@@ -57,7 +71,6 @@ class ScenarioListOutput
             ];
         }
 
-        error_log('🔍 DTO - Converted: ' . $output->title);
         return $output;
     }
 }
