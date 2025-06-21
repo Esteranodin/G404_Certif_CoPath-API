@@ -50,7 +50,6 @@ class ScenarioListOutput
         // Favoris
         $output->favoritesCount = $scenario->getFavorites()->count();
 
-        // ✅ RÉCUPÈRE LES VRAIES IMAGES
         $images = $scenario->getImg();
         $output->images = [];
         

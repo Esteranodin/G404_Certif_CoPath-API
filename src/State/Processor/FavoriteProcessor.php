@@ -26,18 +26,19 @@ class FavoriteProcessor implements ProcessorInterface
             throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException('User not authenticated');
         }
 
-        // ✅ Extraire l'ID du scénario depuis les données brutes
-        $scenarioId = null;
-        
-        // Gérer le format { scenario: "/api/scenarios/123" }
-        if (is_array($data) && isset($data['scenario'])) {
-            $scenarioIri = $data['scenario'];
-            if (preg_match('/\/scenarios\/(\d+)$/', $scenarioIri, $matches)) {
-                $scenarioId = (int) $matches[1];
+        // ✅ Gérer la suppression (DELETE)
+        if ($operation->getName() === '_api_/favorites/{id}_delete') {
+            if ($data instanceof Favorite) {
+                $this->entityManager->remove($data);
+                $this->entityManager->flush();
+                return null; // ✅ Retourne null pour DELETE = 204
             }
         }
-        // Gérer si c'est déjà une entité Favorite
-        elseif ($data instanceof Favorite && $data->getScenario()) {
+
+        // ✅ Gérer la création (POST)
+        $scenarioId = null;
+        
+        if ($data instanceof Favorite && $data->getScenario()) {
             $scenarioId = $data->getScenario()->getId();
         }
 
@@ -45,46 +46,34 @@ class FavoriteProcessor implements ProcessorInterface
             throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException('Scenario ID missing or invalid');
         }
 
-        // ✅ Récupérer le scénario
         $scenario = $this->scenarioRepository->find($scenarioId);
         if (!$scenario) {
             throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('Scenario not found');
         }
 
-        // ✅ Vérifier si déjà en favoris (TOGGLE)
+        // ✅ Vérifier si déjà en favoris
         $existingFavorite = $this->favoriteRepository->findOneBy([
             'user' => $user,
             'scenario' => $scenario
         ]);
 
         if ($existingFavorite) {
-            // ✅ Supprimer si existe déjà
+            // ✅ Supprimer si existe déjà (toggle)
             $this->entityManager->remove($existingFavorite);
             $this->entityManager->flush();
-            
-            return [
-                'message' => 'Favori supprimé',
-                'action' => 'removed',
-                'scenarioId' => $scenario->getId(),
-                'isFavorite' => false
-            ];
+            return null; // ✅ Pas de contenu retourné
         } else {
             // ✅ Ajouter si n'existe pas
             $favorite = new Favorite();
             $favorite->setUser($user);
             $favorite->setScenario($scenario);
             $favorite->setCreatedAt(new \DateTimeImmutable());
+            $favorite->setUpdatedAt(new \DateTimeImmutable());
 
             $this->entityManager->persist($favorite);
             $this->entityManager->flush();
 
-            return [
-                'message' => 'Favori ajouté',
-                'action' => 'added',
-                'scenarioId' => $scenario->getId(),
-                'isFavorite' => true,
-                'favorite' => $favorite
-            ];
+            return $favorite; // ✅ Retourne l'entité Favorite
         }
     }
 }

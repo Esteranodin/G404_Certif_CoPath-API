@@ -44,15 +44,15 @@ class ScenarioDetailOutput
         $output->images = $scenario->getImg()->map(function ($img) {
             return [
                 'id' => $img->getId(),
-                'path' => $img->getImgPath(),      // ✅ Corrigé
-                'alt' => $img->getImgAlt()         // ✅ Corrigé
+                'path' => $img->getImgPath(),      
+                'alt' => $img->getImgAlt()        
             ];
         })->toArray();
 
         $output->music = $scenario->getMusic()->map(function ($music) {
             return [
                 'id' => $music->getId(),
-                'path' => $music->getMusicPath()   // ✅ Corrigé
+                'path' => $music->getMusicPath()  
             ];
         })->toArray();
 

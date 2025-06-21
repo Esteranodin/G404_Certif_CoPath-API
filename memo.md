@@ -27,13 +27,15 @@ UPLOADS dans .gitignore + gérer l'upload
 
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
-FINIR DTO Scenario
+
+FINIR DTO Scenario pour recherche
 Cache React Query → Performance front optimisée
 Rate Limiting → Protection API
 Tests unitaires → Qualité code
-
 
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
 
 que se passe t il si je me co avec un banni ? 
+
+PBLEME requete 400 favoris et note
