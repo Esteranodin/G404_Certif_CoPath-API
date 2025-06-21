@@ -40,6 +40,10 @@ use Symfony\Component\Serializer\Attribute\Groups;
             provider: ScenarioDetailProvider::class,
             security: "is_granted('PUBLIC_ACCESS')"
         ),
+        new GetCollection(),  
+        new Get(
+            uriTemplate: '/scenarios/{id}/entity' 
+        ),
         new Post(
             input: ScenarioCreateInput::class,
             output: ScenarioDetailOutput::class,

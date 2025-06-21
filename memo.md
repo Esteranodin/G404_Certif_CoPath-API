@@ -38,4 +38,4 @@ Tests unitaires → Qualité code
 
 que se passe t il si je me co avec un banni ? 
 
-PBLEME requete 400 favoris et note
+GARDER autant de routes pour scenarios
