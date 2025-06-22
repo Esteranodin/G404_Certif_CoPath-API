@@ -17,20 +17,23 @@ security:
         login:
             pattern: ^/api/login
             stateless: true
+            user_checker: App\Security\UserChecker
             json_login:
                 check_path: /api/login_check
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
         api:
-            pattern:   ^/api
+            pattern: ^/api
             stateless: true
+            user_checker: App\Security\UserChecker
             jwt: ~         
 
         admin: 
             pattern: ^/admin
             lazy: true
             provider: app_user_provider
+            user_checker: App\Security\UserChecker
             custom_authenticator: App\Security\AdminFormAuthenticator
             entry_point: App\Security\AdminFormAuthenticator
             logout:
@@ -39,6 +42,7 @@ security:
      
         main:
             lazy: true
+            user_checker: App\Security\UserChecker
             provider: app_user_provider
 
     # Easy way to control access for large sections of your site

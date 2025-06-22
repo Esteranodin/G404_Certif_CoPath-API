@@ -14,8 +14,6 @@ class UserOutput
     public int $ratingsCount;
     public int $favoritesCount;
     
-    // PAS d'email, password, roles, isBan = SÉCURISÉ
-
     public static function fromEntity(User $user): self
     {
         $output = new self();

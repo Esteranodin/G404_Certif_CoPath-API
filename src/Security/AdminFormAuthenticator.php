@@ -54,7 +54,6 @@ class AdminFormAuthenticator extends AbstractLoginFormAuthenticator
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 
-    // Ajouter cette méthode pour gérer explicitement les échecs d'authentification
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
         if ($request->hasSession()) {
