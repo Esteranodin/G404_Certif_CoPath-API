@@ -16,7 +16,6 @@ use App\Entity\Traits\BlamableTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\ScenarioRepository;
 use App\State\Processor\ScenarioCreateProcessor;
-use App\State\Processor\ScenarioProcessor;
 use App\State\Processor\ScenarioUpdateProcessor;
 use App\State\Provider\ScenarioDetailProvider;
 use App\State\Provider\ScenarioSearchProvider;

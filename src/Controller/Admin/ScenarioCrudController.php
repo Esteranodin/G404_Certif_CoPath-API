@@ -4,8 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Scenario;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class ScenarioCrudController extends AbstractCustomCrudController
@@ -19,22 +19,17 @@ class ScenarioCrudController extends AbstractCustomCrudController
     {
         return [
             // IdField::new('id')->hideOnForm(),
-            TextField::new('title')
-                ->setLabel('Titre'),
-            TextField::new('content', 'Contenu')
-                ->setTemplatePath('admin/scenario_content_preview.html.twig')
-                ->hideOnForm(),
-            AssociationField::new('campaign')
-                ->setLabel('Campagnes')
+            TextField::new('title', 'Titre'),
+            TextareaField::new('content', 'Contenu')
+                ->setTemplatePath('admin/scenario_content_preview.html.twig'),
+            AssociationField::new('campaign', 'Campagnes')
                 ->setTemplatePath('admin/field_clickable.html.twig')
                 ->setCrudController(CampaignCrudController::class)
                 ->hideOnForm(),
-            AssociationField::new('campaign')
-                ->setLabel('Campagnes')
+            AssociationField::new('campaign', 'Campagnes')
                 ->onlyOnForms(),
             ...$this->createTimestampFields(),
-            AssociationField::new('user')
-                ->setLabel('Créer par')
+            AssociationField::new('user', 'Créer par')
                 ->setCrudController(UserCrudController::class)
                 ->hideOnIndex(),
             ImageField::new('imgScenario.imgPath')

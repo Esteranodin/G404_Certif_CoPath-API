@@ -26,16 +26,14 @@ class FavoriteProcessor implements ProcessorInterface
             throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException('User not authenticated');
         }
 
-        // ✅ Gérer la suppression (DELETE)
         if ($operation->getName() === '_api_/favorites/{id}_delete') {
             if ($data instanceof Favorite) {
                 $this->entityManager->remove($data);
                 $this->entityManager->flush();
-                return null; // ✅ Retourne null pour DELETE = 204
+                return null;
             }
         }
 
-        // ✅ Gérer la création (POST)
         $scenarioId = null;
         
         if ($data instanceof Favorite && $data->getScenario()) {
@@ -51,19 +49,16 @@ class FavoriteProcessor implements ProcessorInterface
             throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('Scenario not found');
         }
 
-        // ✅ Vérifier si déjà en favoris
         $existingFavorite = $this->favoriteRepository->findOneBy([
             'user' => $user,
             'scenario' => $scenario
         ]);
 
         if ($existingFavorite) {
-            // ✅ Supprimer si existe déjà (toggle)
             $this->entityManager->remove($existingFavorite);
             $this->entityManager->flush();
-            return null; // ✅ Pas de contenu retourné
+            return null;
         } else {
-            // ✅ Ajouter si n'existe pas
             $favorite = new Favorite();
             $favorite->setUser($user);
             $favorite->setScenario($scenario);
@@ -73,7 +68,7 @@ class FavoriteProcessor implements ProcessorInterface
             $this->entityManager->persist($favorite);
             $this->entityManager->flush();
 
-            return $favorite; // ✅ Retourne l'entité Favorite
+            return $favorite; 
         }
     }
 }
