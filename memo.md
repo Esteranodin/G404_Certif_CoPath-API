@@ -30,4 +30,6 @@ GARDER autant de routes pour scenarios
 
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
-
+Penser message erreur bannissement
+code: 401
+message: "Votre compte a été suspendu. Contactez l'administrateur."
