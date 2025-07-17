@@ -13,4 +13,4 @@
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
 
-/memo.md
+memo.md
