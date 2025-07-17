@@ -17,7 +17,17 @@ final class Version20250607172845 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql('CREATE TABLE campaign (id INT AUTO_INCREMENT NOT NULL, user_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, theme VARCHAR(255) DEFAULT NULL, created_at DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\', updated_at DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_1F1512DDA76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql(
+            'CREATE TABLE campaign (
+            id INT AUTO_INCREMENT NOT NULL,
+            user_id INT DEFAULT NULL,
+            name VARCHAR(255) NOT NULL,
+            theme VARCHAR(255) DEFAULT NULL, 
+            created_at DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\',
+            updated_at DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\',
+            INDEX IDX_1F1512DDA76ED395 (user_id),
+            PRIMARY KEY(id)
+            ) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE favorite (id INT AUTO_INCREMENT NOT NULL, scenario_id INT NOT NULL, user_id INT NOT NULL, created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', updated_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_68C58ED9E04E49DF (scenario_id), INDEX IDX_68C58ED9A76ED395 (user_id), UNIQUE INDEX UNIQ_FAVORITE_USER_SCENARIO (user_id, scenario_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE img_scenario (id INT AUTO_INCREMENT NOT NULL, scenario_id INT DEFAULT NULL, user_id INT NOT NULL, img_path VARCHAR(255) DEFAULT NULL, img_alt VARCHAR(255) DEFAULT NULL, created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', updated_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_90D9CDD6E04E49DF (scenario_id), INDEX IDX_90D9CDD6A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE music (id INT AUTO_INCREMENT NOT NULL, scenario_id INT DEFAULT NULL, user_id INT NOT NULL, music_path VARCHAR(255) DEFAULT NULL, created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', updated_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_CD52224AE04E49DF (scenario_id), INDEX IDX_CD52224AA76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
