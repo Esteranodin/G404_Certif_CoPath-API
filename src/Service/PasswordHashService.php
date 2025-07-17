@@ -23,7 +23,7 @@ class PasswordHashService
                 $plainPassword
             );
             $user->setPassword($hashedPassword);
-            // Effacer le mot de passe en clair pour des raisons de sécurité
+            // Effacer le mot de passe en clair pour des raisons évidentes de sécurité
             $user->setPlainPassword(null);
         }
     }

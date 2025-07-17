@@ -25,12 +25,10 @@ abstract class AbstractProcessor implements ProcessorInterface
             }
         }
         
-        // Initialiser createdAt ET updatedAt lors de la création
         if (method_exists($data, 'setCreatedAt') && $operation instanceof Post) {
             $data->setCreatedAt(new \DateTimeImmutable());
         }
         
-        // Toujours initialiser updatedAt (création ET modification)
         if (method_exists($data, 'setUpdatedAt')) {
             $data->setUpdatedAt(new \DateTimeImmutable());
         }

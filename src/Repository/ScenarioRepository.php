@@ -18,7 +18,7 @@ class ScenarioRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Scenario[] Returns an array of Scenario objects
+     * @return Scenario[] array d'objects Scenario
      */
     public function findByTitle(?string $title = null): array
     {

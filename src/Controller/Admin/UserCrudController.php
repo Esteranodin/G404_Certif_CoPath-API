@@ -71,7 +71,6 @@ class UserCrudController extends AbstractCustomCrudController
             // Gestion du mot de passe
             $this->passwordHashService->hashUserPassword($entityInstance);
             $roles = $entityInstance->getRoles();
-            // Si c'est un tableau associatif comme {"1": "ROLE_USER"}, on le convertit
             if (is_array($roles)) {
                 // On extrait uniquement les valeurs et on ignore les clés
                 $cleanRoles = [];
