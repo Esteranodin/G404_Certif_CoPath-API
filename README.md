@@ -1,78 +1,128 @@
-# Projet :
+# CoPath - API (Back-End)
 
-# Instructions non exhaustives :
+Projet de fin de formation // Certification développeur web  
+**Stack :** Symfony (PHP), Doctrine ORM, JWT Auth
 
-## Installer les dépendances & bundles nécessaires
+---
 
-```bash
-    composer install
-```
+## Présentation
 
-(Décommenter extension=sodium dans fichier serveur/bin/php/versionVoulue/php.ini // redémarrer server et éditeur de code)
+Ce dépôt contient l’API back-end de CoPath, permettant la gestion des utilisateurs, scénarios et campagnes, et offrant des endpoints sécurisés pour l’application front-end.
 
-## Dupliquer le fichier `.env` et le renommer `.env.local`
+---
 
-- Mettre vos informations de **connexion** à la base de donnée
+## Prérequis
 
-  Créer la BDD :
+- PHP >= 8.1
+- Composer
+- Extension sodium activée
+- Serveur Symfony CLI ou Apache/Nginx
+- Base de données MySQL/MariaDB
 
-```bash
-   php bin\console d:d:c
-```
+---
 
-- Si il y en a, executez les **migrations** :
+## Installation
 
-```bash
-   php bin\console d:m:m
-```
-
-- Si il y en a, executez les **fixtures** :
+### 1. Installer les dépendances
 
 ```bash
-    php bin/console doctrine:fixtures:load
+composer install
 ```
+> **Astuce :** Activez (décommentez) l’extension sodium dans votre fichier `php.ini` si nécessaire. Ici : serveur/bin/php/versionVoulue/php.ini. Pensez à redémarrer serveur et IDE.
 
-## Générer les clefs privé & publique JWT
+### 2. Configuration de l’environnement
 
-- Installation du bundle Composer
+- Dupliquez le fichier `.env` en `.env.local`
+- Renseignez vos informations de connexion à la base de données
+
+Créer la base :
 
 ```bash
-    composer require lexik/jwt-authentication-bundle
+php bin/console doctrine:database:create
 ```
 
-- Clefs
+Lancer les migrations :
 
 ```bash
-    symfony console lexik:jwt:generate-keypair
+php bin/console doctrine:migrations:migrate
 ```
 
-Si la commande ne fonctionne pas, créez le dossier config/jwt à la main et ouvrez un terminal Git Bash :
+(Lancer les fixtures - facultatif)
 
 ```bash
-    openssl genrsa -out config/jwt/private.pem -aes256 4096
-    openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem
+php bin/console doctrine:fixtures:load
 ```
 
-(mettre à jour le `.env.local` // passphrase )
+### 3. Générer les clefs privée et publique JWT
 
-## Lancer le serveur
 
 ```bash
-    symfony server:start
+composer require lexik/jwt-authentication-bundle
+symfony console lexik:jwt:generate-keypair
 ```
-
-## Couper le serveur
+> Si besoin, créez manuellement `config/jwt` et utilisez, dans un terminal **Git Bash**, openssl :
 
 ```bash
-    symfony server:stop
+openssl genrsa -out config/jwt/private.pem -aes256 4096
+openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem
 ```
+N’oubliez pas d’actualiser la passphrase dans `.env.local`.
 
-## Ajouter vos variables d'environnement **Mailtrap**
-
-Ensuite, faîtes tourner Messenger pour les tâches asynchrone comme l'envoie de mail :
+### 4. Lancer le serveur
 
 ```bash
-    php bin/console messenger:consume async -vv
+symfony server:start
 ```
 
-<!-- * Les **icones** : https://fontawesome.com/v4/icons/ -->
+Arrêt :
+
+```bash
+symfony server:stop
+```
+
+### 5. Configuration Mailtrap (emails de dev)
+
+- Ajoutez vos variables d’environnement Mailtrap dans `.env.local`.
+- Démarrez Messenger pour les envois asynchrones :
+
+```bash
+php bin/console messenger:consume async -vv
+```
+
+---
+
+## Endpoints principaux (exemples)
+
+- `/api/login_check` — Authentification (JWT)
+- `/api/users` — Gestion des utilisateurs
+- `/api/scenarios` — Gestion des scénarios
+- `/api/campaigns` — Gestion des campagnes
+
+> Voir la documentation de l’API ou le code source pour la liste complète.
+
+---
+
+## Administration
+
+- Dashboard EasyAdmin accessible pour les administrateurs
+
+---
+
+## Bonnes pratiques
+
+- Respectez la structure du projet Symfony
+- Sécurisez les routes sensibles
+- Testez les endpoints avec Postman ou Insomnia
+
+---
+
+## Contribution
+
+Toute contribution est la bienvenue !  
+Merci d’ouvrir une issue ou une pull request si besoin.
+
+---
+
+## Contact
+
+Pour tout souci ou question, contactez : [Esteranodin](https://github.com/Esteranodin)
